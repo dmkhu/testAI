@@ -1,325 +1,160 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnglishPerfect - Present Perfect Tense</title>
+    <title>Интерактивная Лампочка</title>
     <style>
         :root {
-            --primary: #6C63FF;
-            --secondary: #2A2D3E;
-            --accent: #00D2D3;
-            --bg: #F0F2F5;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --bulb-off-color: #333333;
+            --bulb-on-color: #f8f8f8;
+            --shadow-glow: rgba(255, 255, 255, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            color: var(--secondary);
-        }
-
-        .app-container {
-            background: var(--card-bg);
-            width: 90%;
-            max-width: 600px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        h1 { color: var(--primary); margin-bottom: 0.5rem; }
-        p { color: #666; margin-bottom: 2rem; }
-
-        .screen { display: none; animation: fadeIn 0.5s ease; }
-        .active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        input[type="text"] {
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            width: 70%;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.2s, background 0.2s;
-        }
-
-        .btn:hover { background-color: #5a52d5; transform: scale(1.02); }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
-        
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #ddd;
-            border-radius: 3px;
-            margin-bottom: 2rem;
             overflow: hidden;
         }
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 0%;
-            transition: width 0.3s ease;
+
+        main {
+            text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
-        .question-box { margin-bottom: 2rem; min-height: 80px; display: flex; align-items: center; justify-content: center;}
-        
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .option-btn {
-            background: white;
-            border: 2px solid #eee;
-            padding: 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        .option-btn:hover { background: #f9f9f9; border-color: var(--primary); }
-        
-        .correct { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
-        .wrong { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
-
-        .score-circle {
-            width: 120px;
-            height: 120px;
+        .bulb-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
             border-radius: 50%;
-            background: var(--primary);
-            color: white;
+            background-color: var(--bulb-off-color);
+            box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.5rem;
-            margin: 0 auto 2rem;
         }
 
-        .history-list {
-            text-align: left;
-            max-height: 300px;
-            overflow-y: auto;
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
+        .bulb-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .history-item {
-            background: white;
-            padding: 10px;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+
+        .bulb-container.on {
+            background-color: var(--bulb-on-color);
+            box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 60px var(--shadow-glow), 0 0 100px var(--shadow-glow);
+        }
+
+        .bulb-container.on::before {
+            opacity: 1;
+            animation: flicker 2s infinite alternate;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        button {
+            background-color: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            font-size: 1.2rem;
+            padding: 15px 40px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.2s;
+            min-width: 48px;
+            min-height: 48px;
+        }
+
+        button:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 600px) {
+            .bulb-container {
+                width: 150px;
+                height: 150px;
+            }
+            h1 {
+                font-size: 1.2rem;
+            }
+            button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <main>
+        <div class="bulb-container" id="bulb"></div>
+        <h1>Интерактивная Лампочка</h1>
+        <button id="toggle-btn">Включить</button>
+    </main>
 
-<div class="app-container">
-    
-    <!-- START SCREEN -->
-    <div id="start-screen" class="screen active">
-        <h1>EnglishPerfect</h1>
-        <p>Тренажер Present Perfect Tense</p>
-        <p>Уровень: <span id="user-level-display" style="color: var(--primary); font-weight: bold;">Выберите уровень</span></p>
-        
-        <input type="text" id="level-input" placeholder="Например: A1">
-        <br>
-        <button class="btn" onclick="startQuiz()">Начать тестирование</button>
-    </div>
-
-    <!-- QUIZ SCREEN -->
-    <div id="quiz-screen" class="screen">
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-        <h2 id="question-text">Вопрос...</h2>
-        
-        <div class="options-grid" id="options-container">
-            <!-- Options generated by JS -->
-        </div>
-    </div>
-
-    <!-- RESULT SCREEN -->
-    <div id="result-screen" class="screen">
-        <div class="score-circle" id="final-score">0%</div>
-        <h2>Тест завершен!</h2>
-        <p id="result-message"></p>
-        
-        <button class="btn btn-outline" onclick="restartQuiz()">Пройти заново</button>
-        <br><br>
-        <button class="btn" style="background-color: var(--secondary);" onclick="showStartScreen()">Назад к меню</button>
-    </div>
-
-</div>
-
-<script>
-    // --- DATA & LOGIC ---
-    
-    const levels = {
-        'A1': { level: 'Beginner', questions: [
-            "I haven't seen him for a long time. He is ___.", 
-            "She ___ to the store yesterday. She bought some milk.", 
-            "We ___ been to Paris before.", 
-            "He has lost his keys."
-        ]},
-        'A2': { level: 'Elementary', questions: [
-            "I ___ seen him since 2010.", 
-            "She ___ not finished her homework yet.", 
-            "They ___ been to London three times.", 
-            "He has a new car."
-        ]},
-        'B1': { level: 'Intermediate', questions: [
-            "I ___ been to Japan. I love the food there.", 
-            "She ___ not finished her report yet. It is 2 AM.", 
-            "We ___ been to the cinema last week.", 
-            "He has lost his passport."
-        ]},
-        'B2': { level: 'Advanced', questions: [
-            "I ___ been to Paris since 2015.", 
-            "She ___ not finished her thesis yet. She is in a meeting.", 
-            "They ___ been to the moon several times.", 
-            "He has lost his job."
-        ]},
-        'C1': { level: 'Professional', questions: [
-            "I ___ been to London since 2015.", 
-            "She ___ not finished her thesis yet. She is in a meeting.", 
-            "They ___ been to the moon several times.", 
-            "He has lost his job."
-        ]},
-        'C2': { level: 'Native', questions: [
-            "I ___ been to London since 2015.", 
-            "She ___ not finished her thesis yet. She is in a meeting.", 
-            "They ___ been to the moon several times.", 
-            "He has lost his job."
-        ]}
-    };
-
-    let currentQuestions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let userLevel = 'A1';
-
-    // --- NAVIGATION ---
-
-    function showScreen(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
-
-    function startQuiz() {
-        const input = document.getElementById('level-input').value.trim();
-        if (!input) return alert("Пожалуйста, введите уровень!");
-
-        userLevel = input;
-        currentQuestions = levels[userLevel].questions;
-        currentIndex = 0;
-        score = 0;
-        
-        document.getElementById('user-level-display').innerText = userLevel;
-        showScreen('quiz-screen');
-        loadQuestion();
-    }
-
-    function loadQuestion() {
-        if (currentIndex >= currentQuestions.length) {
-            endQuiz();
-            return;
-        }
-
-        const qText = currentQuestions[currentIndex];
-        document.getElementById('question-text').innerText = qText;
-        
-        // Update progress bar
-        const progressPercent = ((currentIndex) / currentQuestions.length) * 100;
-        document.getElementById('progress').style.width = progressPercent + "%";
-
-        const optionsDiv = document.getElementById('options-container');
-        optionsDiv.innerHTML = '';
-
-        // Generate 4 random distractors (wrong answers)
-        let allOptions = [qText];
-        while(allOptions.length < 4) {
-            let randomQ = currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
-            if (!allOptions.includes(randomQ)) {
-                allOptions.push(randomQ);
+    <script>
+        (function() {
+            const bulb = document.getElementById('bulb');
+            const btn = document.getElementById('toggle-btn');
+            
+            // Логика переключения состояния
+            function toggleState() {
+                if (bulb.classList.contains('on')) {
+                    bulb.classList.remove('on');
+                    btn.textContent = 'Включить';
+                } else {
+                    bulb.classList.add('on');
+                    btn.textContent = 'Выключить';
+                }
             }
-        }
 
-        // Shuffle options
-        allOptions.sort(() => Math.random() - 0.5);
+            // Обработка событий мыши и тача
+            const handleInteraction = (e) => {
+                e.preventDefault();
+                toggleState();
+            };
 
-        allOptions.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(btn, opt === qText);
-            optionsDiv.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(btn, isCorrect) {
-        if (isCorrect) {
-            btn.classList.add('correct');
-            score++;
-        } else {
-            btn.classList.add('wrong');
-        }
-        
-        // Disable all buttons after click
-        const buttons = document.querySelectorAll('.option-btn');
-        buttons.forEach(b => b.disabled = true);
-
-        setTimeout(() => {
-            currentIndex++;
-            loadQuestion();
-        }, 1500);
-    }
-
-    function endQuiz() {
-        showScreen('result-screen');
-        document.getElementById('final-score').innerText = Math.round((score / currentQuestions.length) * 100) + '%';
-        
-        let msg = "";
-        if (score === currentQuestions.length) msg = "Отлично! Вы настоящий эксперт в Present Perfect.";
-        else if (score > currentQuestions.length / 2) msg = "Хороший результат! У вас есть куда расти.";
-        else msg = "Неплохо, но нужно повторить тему.";
-        
-        document.getElementById('result-message').innerText = msg;
-    }
-
-    function restartQuiz() {
-        startQuiz();
-    }
-
-    function showStartScreen() {
-        showScreen('start-screen');
-    }
-
-</script>
-
+            btn.addEventListener('click', handleInteraction);
+            
+            // Поддержка тач-событий для мобильных устройств
+            btn.addEventListener('touchstart', handleInteraction, { passive: true });
+        })();
+    </script>
 </body>
 </html>
-```
