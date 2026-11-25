@@ -1,158 +1,228 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивная Лампочка</title>
+    <title>Smart Light Bulb UI</title>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --bulb-off-color: #e0e0e0;
-            --bulb-on-color: #ffbf00;
-            --shadow-color: rgba(255, 191, 0, 0.6);
-            --btn-text-off: #ffffff;
-            --btn-text-on: #1a1a1a;
+            --bg-color: #2b2b2b;
+            --bulb-off-color: #555;
+            --bulb-on-color: #f7df5e;
+            --text-color: #ffffff;
+            --btn-bg: #444;
+            --glow-color: rgba(247, 223, 94, 0.6);
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
-            color: var(--btn-text-off);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             overflow: hidden;
         }
 
-        .container {
+        .main-container {
             text-align: center;
+            padding: 2rem;
+        }
+
+        .light-bulb-wrapper {
             position: relative;
-        }
-
-        /* SVG Styles */
-        svg {
             width: 150px;
-            height: 150px;
-            transition: fill 0.3s ease, filter 0.3s ease;
-            display: block;
+            height: 220px;
+            margin: 0 auto 30px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.175);
         }
 
-        .bulb-body {
-            fill: var(--bulb-off-color);
-            stroke: #333;
-            stroke-width: 2;
+        .light-bulb-icon {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bulb-off-color);
+            border-radius: 50% 50% 40% 40%;
+            box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 2;
         }
 
-        .bulb-glow {
-            opacity: 0;
-            transition: opacity 0.3s ease, filter 0.3s ease;
+        .light-bulb-icon::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 40px;
+            background-color: var(--bulb-off-color);
+            border-radius: 50%;
+            z-index: 3;
         }
 
-        /* Glow Effect Class */
-        .container.on svg .bulb-body {
-            fill: var(--bulb-on-color);
-            filter: drop-shadow(0 0 20px var(--shadow-color));
-        }
-
-        .container.on svg .bulb-glow {
-            opacity: 1;
-            filter: blur(40px);
-        }
-
-        /* Button Styles */
-        button {
-            margin-top: 30px;
-            padding: 15px 40px;
+        .light-bulb-text {
             font-size: 1.2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .control-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            background-color: #333;
-            color: var(--btn-text-off);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            font-weight: 600;
         }
 
-        button:hover {
+        .control-btn:hover {
+            background-color: #555;
             transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.4);
         }
 
-        button:active {
-            transform: translateY(0);
+        .control-btn:active {
+            transform: translateY(1px);
         }
 
-        /* Button State Classes */
-        .container.on button {
+        /* Состояния */
+        body.light-on .light-bulb-wrapper {
+            transform: scale(1.1);
+        }
+
+        body.light-on .light-bulb-icon {
             background-color: var(--bulb-on-color);
-            color: var(--btn-text-on);
-            box-shadow: 0 0 15px var(--shadow-color);
+            box-shadow: 
+                0 0 30px var(--glow-color),
+                inset 0 0 15px rgba(255, 255, 255, 0.8);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 600px) {
-            svg {
-                width: 120px;
-                height: 120px;
-            }
-            button {
-                padding: 10px 30px;
-                font-size: 1rem;
-            }
+        body.light-on .light-bulb-text {
+            opacity: 0;
+        }
+
+        body.light-on .control-btn {
+            background-color: var(--bulb-on-color);
+            color: #2b2b2b;
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+
+        /* Анимация света */
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; }
+            100% { opacity: 1; }
+        }
+
+        body.light-on .light-bulb-icon::before {
+            animation: flicker 2s infinite ease-in-out;
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="app-container">
-        <!-- SVG Bulb Representation -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <!-- Main bulb shape -->
-            <path class="bulb-body" d="M12,2C7.53,2 4,5.08 4,9c0,2.69 1.08,5.06 2.76,6.76L12,22l7.24-6.24C26.08,14.06 27,11.69 27,9c0-3.92-3.53-7-8-7z"/>
-            <!-- Inner filament (visual detail) -->
-            <path class="bulb-body" d="M12,14l-2,-2l2,-2l2,2l-2,2z" fill="#333"/>
-            <!-- Glow effect overlay -->
-            <circle class="bulb-glow" cx="12" cy="16" r="8" fill="#ffbf00" opacity="0.4"/>
-        </svg>
-
-        <button id="toggle-btn">ВКЛЮЧИТЬ</button>
+<main class="main-container">
+    <div id="bulb-wrapper" class="light-bulb-wrapper">
+        <div class="light-bulb-icon"></div>
     </div>
+    <button id="toggleBtn" class="control-btn">ВКЛ / ВЫКЛ</button>
+</main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('app-container');
-            const button = document.getElementById('toggle-btn');
+<script>
+    // Состояние системы
+    const state = {
+        isLightOn: false,
+        lastActionTime: null
+    };
 
-            // Load state from localStorage or default to false (off)
-            const isOn = localStorage.getItem('bulbState') === 'true';
+    // Элементы DOM
+    const bodyElement = document.body;
+    const btnElement = document.getElementById('toggleBtn');
+    const bulbWrapper = document.getElementById('bulb-wrapper');
+    const textElement = document.querySelector('.light-bulb-text');
+
+    // Аудио контекст (синтезатор звука)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        try {
+            if (state.isLightOn) return; // Если уже включено, не издаем звук выключения
             
-            if (isOn) {
-                container.classList.add('on');
-                button.textContent = 'ВЫКЛЮЧИТЬ';
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'power-on') {
+                // Звук ВКЛ: высокий пик, быстрый спад (тихий звук)
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'power-off') {
+                // Звук ВЫКЛ: резкий звук отключения (похож на "клань")
+                oscillator.type = 'sawtooth';
+                oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.6);
             }
+        } catch (e) {
+            console.warn('Audio context not available or user interaction required first');
+        }
+    }
 
-            // Toggle Logic
-            button.addEventListener('click', () => {
-                const newState = !container.classList.contains('on');
-                
-                // Update UI classes
-                if (newState) {
-                    container.classList.add('on');
-                    button.textContent = 'ВЫКЛЮЧИТЬ';
-                } else {
-                    container.classList.remove('on');
-                    button.textContent = 'ВКЛЮЧИТЬ';
-                }
+    function updateUI() {
+        if (state.isLightOn) {
+            bodyElement.classList.add('light-on');
+            textElement.textContent = "Включена";
+            textElement.style.opacity = 1;
+            btnElement.textContent = "ВЫКЛ";
+        } else {
+            bodyElement.classList.remove('light-on');
+            textElement.textContent = "Выключена";
+            textElement.style.opacity = 0.7;
+            btnElement.textContent = "ВКЛ";
+        }
+    }
 
-                // Save to localStorage
-                localStorage.setItem('bulbState', newState);
-            });
-        });
-    </script>
+    function toggleLight() {
+        const now = Date.now();
+        
+        // Проверка на спам (опционально, можно убрать)
+        if (!state.lastActionTime || (now - state.lastActionTime) < 500) return;
+
+        // Логика переключения
+        state.isLightOn = !state.isLightOn;
+        state.lastActionTime = now;
+        
+        playSound(state.isLightOn ? 'power-on' : 'power-off');
+        updateUI();
+    }
+
+    // Обработчики событий
+    btnElement.addEventListener('click', toggleLight);
+    
+    // Поддержка свайпов на мобильных (простая реализация)
+    let touchStartY = 0;
+    document.body.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
+    document.body.addEventListener('touchend', e => {
+        if (touchStartY !== undefined && Math.abs(e.changedTouches[0].clientY - touchStartY) > 50) {
+            toggleLight();
+        }
+        touchStartY = null;
+    });
+
+</script>
 </body>
 </html>
-```
