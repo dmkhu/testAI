@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,154 +8,151 @@
     <style>
         :root {
             --bg-color: #1a1a1a;
-            --text-color: #ffffff;
-            --bulb-off-color: #333333;
-            --bulb-on-color: #f8f8f8;
-            --shadow-glow: rgba(255, 255, 255, 0.4);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --bulb-off-color: #e0e0e0;
+            --bulb-on-color: #ffbf00;
+            --shadow-color: rgba(255, 191, 0, 0.6);
+            --btn-text-off: #ffffff;
+            --btn-text-on: #1a1a1a;
         }
 
         body {
+            margin: 0;
+            padding: 0;
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            height: 100vh;
+            color: var(--btn-text-off);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
             overflow: hidden;
         }
 
-        main {
+        .container {
             text-align: center;
             position: relative;
-            z-index: 1;
         }
 
-        .bulb-container {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 40px;
-            border-radius: 50%;
-            background-color: var(--bulb-off-color);
-            box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* SVG Styles */
+        svg {
+            width: 150px;
+            height: 150px;
+            transition: fill 0.3s ease, filter 0.3s ease;
+            display: block;
         }
 
-        .bulb-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        .bulb-body {
+            fill: var(--bulb-off-color);
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .bulb-glow {
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, filter 0.3s ease;
         }
 
-        .bulb-container.on {
-            background-color: var(--bulb-on-color);
-            box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 60px var(--shadow-glow), 0 0 100px var(--shadow-glow);
+        /* Glow Effect Class */
+        .container.on svg .bulb-body {
+            fill: var(--bulb-on-color);
+            filter: drop-shadow(0 0 20px var(--shadow-color));
         }
 
-        .bulb-container.on::before {
+        .container.on svg .bulb-glow {
             opacity: 1;
-            animation: flicker 2s infinite alternate;
+            filter: blur(40px);
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
+        /* Button Styles */
         button {
-            background-color: transparent;
-            border: 2px solid var(--text-color);
-            color: var(--text-color);
-            font-size: 1.2rem;
+            margin-top: 30px;
             padding: 15px 40px;
-            border-radius: 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.1s ease, background-color 0.2s;
-            min-width: 48px;
-            min-height: 48px;
+            background-color: #333;
+            color: var(--btn-text-off);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         button:hover {
-            background-color: var(--text-color);
-            color: var(--bg-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0,0,0,0.4);
         }
 
         button:active {
-            transform: scale(0.95);
+            transform: translateY(0);
         }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        /* Button State Classes */
+        .container.on button {
+            background-color: var(--bulb-on-color);
+            color: var(--btn-text-on);
+            box-shadow: 0 0 15px var(--shadow-color);
         }
 
-        /* Адаптивность для мобильных */
+        /* Responsive Adjustments */
         @media (max-width: 600px) {
-            .bulb-container {
-                width: 150px;
-                height: 150px;
-            }
-            h1 {
-                font-size: 1.2rem;
+            svg {
+                width: 120px;
+                height: 120px;
             }
             button {
-                padding: 12px 30px;
+                padding: 10px 30px;
                 font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <main>
-        <div class="bulb-container" id="bulb"></div>
-        <h1>Интерактивная Лампочка</h1>
-        <button id="toggle-btn">Включить</button>
-    </main>
+
+    <div class="container" id="app-container">
+        <!-- SVG Bulb Representation -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <!-- Main bulb shape -->
+            <path class="bulb-body" d="M12,2C7.53,2 4,5.08 4,9c0,2.69 1.08,5.06 2.76,6.76L12,22l7.24-6.24C26.08,14.06 27,11.69 27,9c0-3.92-3.53-7-8-7z"/>
+            <!-- Inner filament (visual detail) -->
+            <path class="bulb-body" d="M12,14l-2,-2l2,-2l2,2l-2,2z" fill="#333"/>
+            <!-- Glow effect overlay -->
+            <circle class="bulb-glow" cx="12" cy="16" r="8" fill="#ffbf00" opacity="0.4"/>
+        </svg>
+
+        <button id="toggle-btn">ВКЛЮЧИТЬ</button>
+    </div>
 
     <script>
-        (function() {
-            const bulb = document.getElementById('bulb');
-            const btn = document.getElementById('toggle-btn');
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('app-container');
+            const button = document.getElementById('toggle-btn');
+
+            // Load state from localStorage or default to false (off)
+            const isOn = localStorage.getItem('bulbState') === 'true';
             
-            // Логика переключения состояния
-            function toggleState() {
-                if (bulb.classList.contains('on')) {
-                    bulb.classList.remove('on');
-                    btn.textContent = 'Включить';
-                } else {
-                    bulb.classList.add('on');
-                    btn.textContent = 'Выключить';
-                }
+            if (isOn) {
+                container.classList.add('on');
+                button.textContent = 'ВЫКЛЮЧИТЬ';
             }
 
-            // Обработка событий мыши и тача
-            const handleInteraction = (e) => {
-                e.preventDefault();
-                toggleState();
-            };
+            // Toggle Logic
+            button.addEventListener('click', () => {
+                const newState = !container.classList.contains('on');
+                
+                // Update UI classes
+                if (newState) {
+                    container.classList.add('on');
+                    button.textContent = 'ВЫКЛЮЧИТЬ';
+                } else {
+                    container.classList.remove('on');
+                    button.textContent = 'ВКЛЮЧИТЬ';
+                }
 
-            btn.addEventListener('click', handleInteraction);
-            
-            // Поддержка тач-событий для мобильных устройств
-            btn.addEventListener('touchstart', handleInteraction, { passive: true });
-        })();
+                // Save to localStorage
+                localStorage.setItem('bulbState', newState);
+            });
+        });
     </script>
 </body>
 </html>
+```
