@@ -1,17 +1,20 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фрося | Digital Resume</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Фрося — Резюме</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #2e7d32;
-            --dark-green: #1b5e20;
-            --earth-brown: #5d4037;
-            --light-gray: #eceff1;
-            --bg-color: #f4f4f9;
+            --primary-green: #4A5D43;
+            --secondary-gray: #7F8C8D;
+            --bg-color: #E0E5E0;
+            --accent-brown: #A67B5B;
+            --text-dark: #333333;
         }
 
         * {
@@ -20,309 +23,285 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--bg-color);
-            color: #333;
+            color: var(--text-dark);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            min-height: 100vh;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(to bottom, #e8f5e9, #fff);
-            border-bottom: 3px solid var(--primary-green);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-pic-container {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-            position: relative;
-            border-radius: 50%;
-            background-color: var(--light-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cat-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid var(--primary-green);
-            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-        }
-
-        .cat-img:hover {
-            transform: scale(1.05) rotate(-2deg);
-            box-shadow: 0 15px 30px rgba(46, 125, 50, 0.5);
-        }
-
-        h1 {
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
             color: var(--primary-green);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
         }
 
-        .role {
-            color: var(--earth-brown);
-            font-weight: bold;
+        /* --- Header --- */
+        header {
+            background-color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--accent-brown);
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 20px;
             font-size: 0.9rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s 0.2s forwards;
+            transition: color 0.3s;
         }
 
-        section {
-            padding: 40px 20px;
-            border-bottom: 1px solid #eee;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
+        nav a:hover {
+            color: var(--primary-green);
         }
 
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h2 {
-            color: var(--dark-green);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            text-align: center;
-            position: relative;
-        }
-
-        h2::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background-color: var(--earth-brown);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        .skills-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .skill-item {
-            background-color: var(--light-gray);
-            padding: 15px;
-            border-left: 4px solid var(--primary-green);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        .skill-item:nth-child(1) { animation: slideInLeft 0.5s forwards 0.2s; }
-        .skill-item:nth-child(2) { animation: slideInLeft 0.5s forwards 0.4s; }
-        .skill-item:nth-child(3) { animation: slideInLeft 0.5s forwards 0.6s; }
-        .skill-item:nth-child(4) { animation: slideInLeft 0.5s forwards 0.8s; }
-        .skill-item:nth-child(5) { animation: slideInLeft 0.5s forwards 1.0s; }
-
-        .skill-item:hover {
-            background-color: #dcedc8;
-            transform: translateX(10px);
-        }
-
-        .reviews-container {
+        /* --- Hero Section --- */
+        .hero {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 120px 10% 60px;
+            min-height: 80vh;
+            background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%);
+        }
+
+        .hero-text {
+            max-width: 500px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-brown);
+            transform: translateY(-2px);
+        }
+
+        /* --- Profile Section --- */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 10%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-top: -50px;
+        }
+
+        .profile-img {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            height: auto;
+            animation: float 6s ease-in-out infinite; 
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-label {
+            color: var(--accent-brown);
+            font-weight: bold;
+        }
+
+        /* --- Skills Section --- */
+        .skills-section {
+            padding: 60px 10%;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: flex;
+            justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
-            justify-content: center;
+            margin-top: 40px;
         }
 
-        .review-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            width: 45%;
-            min-width: 300px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
+        .skill-tag {
+            background-color: var(--bg-color);
+            color: var(--primary-green);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
         }
 
-        .review-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(46, 125, 50, 0.15);
-        }
-
-        .contact-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            background-color: var(--earth-brown);
+        .skill-tag:hover {
+            background-color: var(--accent-brown);
             color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background 0.3s, transform 0.2s;
-            opacity: 0;
-            transform: translateY(10px);
         }
 
-        .contact-btn.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .contact-btn:hover {
-            background-color: #3e2723;
-            transform: scale(1.02);
-        }
-
+        /* --- Footer --- */
         footer {
+            background-color: var(--primary-green);
+            color: white;
             text-align: center;
-            padding: 20px;
-            color: #777;
-            font-size: 0.8rem;
-            border-top: 1px solid #eee;
+            padding: 40px 10%;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Анимация появления при скролле */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+        }
+
+        /* Адаптив */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 20px;
             }
-        }
-
-        @keyframes slideInLeft {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .container { padding: 15px; }
-            .review-card { width: 100%; }
+            .hero-text h1 { font-size: 2rem; }
+            .profile-container { padding: 30px 5%; }
+            nav { display: none; } 
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- Шапка -->
     <header>
-        <div class="profile-pic-container">
-            <!-- ВАЖНО: Здесь должна быть тег img с src="cat.jpg" -->
-            <img src="https://via.placeholder.com/150/2e7d32/ffffff?text=Frosia" alt="Фото Фрося" class="cat-img">
-        </div>
-        <h1>Фрося</h1>
-        <p class="role">КОШКА!!!</p>
+        <div class="logo">Фрося</div>
+        <nav>
+            <a href="#about">Обо мне</a>
+            <a href="#skills">Хобби</a>
+            <a href="#contact">Контакты</a>
+        </nav>
     </header>
 
-    <section id="about">
-        <h2>Обо мне</h2>
-        <p>Привет! Я — Фрося. Я не просто кошка, я настоящий профессионал в области ухода за домом и создания уютной атмосферы. Мой опыт работы: "Бег по квартире", "Ловля мышей (виртуально)", "Освежать воздух".</p>
-        <br>
-        <p style="text-align: center; font-style: italic; color: var(--earth-brown);">"Я люблю, когда люди улыбаются."</p>
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-text" id="hero-text">
+            <h1>Привет! Я Фрося.</h1>
+            <p>Милая, пушистая и немного капризная. Моя цель — быть любимой всеми и получать много лапок!</p>
+            <a href="#contact" class="btn">Написать хозяину</a>
+        </div>
     </section>
 
-    <section id="skills">
-        <h2>Навыки и компетенции</h2>
-        <ul class="skills-list">
-            <li class="skill-item">🐾 Опыт работы: 100%</li>
-            <li class="skill-item">🏠 Уборка: Профессиональная</li>
-            <li class="skill-item">📱 Социальные навыки: Высокий</li>
-            <li class="skill-item">🎮 Любимая игра: "Медведь-игрок"</li>
-            <li class="skill-item">💤 Сонливость: Уровень 10/10</li>
-        </ul>
-    </section>
-
-    <section id="reviews">
-        <h2>Отзывы клиентов</h2>
-        <div class="reviews-container">
-            <div class="review-card glass-card">
-                <p><strong>"Фрося — это волшебство!"</strong></p>
-                <p>Моя кошка, которая не только чистит дом, но и делает его уютнее. Она всегда знает, когда пора почесаться.</p>
+    <!-- Карточка профиля -->
+    <section id="about" class="profile-container">
+        <!-- Заглушка для картинки, так как cat.jpg может не быть -->
+        <img src="https://images.unsplash.com/photo-1574678329501-6c8d2a1e8b3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Фото Фрося" class="profile-img">
+        
+        <div class="profile-info">
+            <h2>Фрося</h2>
+            <div class="info-row">
+                <span class="info-label">Возраст:</span>
+                <span>1 год 3 месяца</span>
             </div>
-            <div class="review-card glass-card">
-                <p><strong>"Лучший кот в округе"</strong></p>
-                <p>Учитывать не только вкусную еду, но и чистоту. Рекомендую! Она даже умеет открывать коробки.</p>
+            <div class="info-row">
+                <span class="info-label">Вес:</span>
+                <span>4.5 кг</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Город:</span>
+                <span>Краснодар, ул. Мечты</span>
             </div>
         </div>
     </section>
 
-    <section id="contact">
-        <h2>Связаться со мной</h2>
-        <a href="#" class="contact-btn">WhatsApp: +7 (999) 000-00-00</a>
-        <a href="#" class="contact-btn">Telegram: @frosia_cat</a>
-        <a href="#" class="contact-btn">Email: frosia@example.com</a>
+    <!-- Секция навыков -->
+    <section id="skills" class="skills-section">
+        <h2>Мои навыки и хобби</h2>
+        <p style="max-width: 600px; margin: 0 auto;">Фрося умеет делать следующее:</p>
+        
+        <div class="skills-grid">
+            <span class="skill-tag">🎵 Мурлычет</span>
+            <span class="skill-tag">💧 Пьет воду</span>
+            <span class="skill-tag">🥘 Ест котлеты</span>
+            <span class="skill-tag">🛌 Сонит</span>
+            <span class="skill-tag">👀 Смотрит</span>
+        </div>
     </section>
 
-    <footer>
-        &copy; 2023 Фрося. Все права защищены (или просто пропущено).
+    <!-- Подвал -->
+    <footer id="contact">
+        <p>Связь: 8 (900) 000-00-00 | Email: frosa@email.com</p>
+        <br>
+        <p>&copy; 2023 Фрося. Все права защищены.</p>
     </footer>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const sections = document.querySelectorAll('section');
-        const contactBtns = document.querySelectorAll('.contact-btn');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                threshold: 0.1
+            };
 
-        const observerOptions = {
-            root: null,
-            threshold: 0.15
-        };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, observerOptions);
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(el => observer.observe(el));
-        contactBtns.forEach(el => observer.observe(el));
-    });
-</script>
-
+            const elementsToAnimate = document.querySelectorAll('.hero-text, .profile-info, .skills-grid');
+            elementsToAnimate.forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
+```
