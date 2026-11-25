@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CipherGen - Secure Password Generator</title>
+    <title>Secure Password Generator</title>
     <style>
         :root {
-            --bg-color: #f3f4f6;
+            --bg-color: #f4f6f9;
             --card-bg: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --accent-blue: #3b82f6;
-            --accent-hover: #2563eb;
-            --border-color: #e5e7eb;
-            --font-mono: 'Courier New', Courier, monospace;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent-color: #007bff;
+            --accent-hover: #0056b3;
+            --error-color: #dc3545;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -30,146 +31,154 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 2rem;
+            padding: 20px;
         }
 
         .container {
             background-color: var(--card-bg);
             width: 100%;
-            max-width: 800px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 2rem;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
+            margin-bottom: 10px;
         }
 
         h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
+            font-size: 1.5rem;
             color: var(--text-primary);
-            letter-spacing: -0.025em;
+            font-weight: 700;
         }
 
-        .subtitle {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        .controls {
+        .input-group {
             display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 8px;
         }
 
         label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.95rem;
         }
 
         input[type="number"] {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
             font-size: 1rem;
-            width: 120px;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            transition: border-color 0.3s ease;
         }
 
         input[type="number"]:focus {
             outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            border-color: var(--accent-color);
         }
 
-        button {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--accent-blue);
+        button.generate-btn {
+            background-color: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
             font-weight: 600;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
 
-        button:hover {
+        button.generate-btn:hover {
             background-color: var(--accent-hover);
-            transform: translateY(-1px);
         }
 
-        button:active {
-            transform: translateY(0);
+        button.generate-btn:active {
+            transform: scale(0.98);
         }
 
         .output-section {
-            margin-top: 2rem;
-            text-align: center;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
         }
 
-        .output-container {
-            background-color: #f9fafb;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: relative;
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 15px;
+            background-color: #fafafa;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            resize: vertical;
+            line-height: 1.5;
         }
 
-        .password-display {
-            font-family: var(--font-mono);
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            white-space: pre;
-            overflow-x: auto;
-            min-height: 3rem;
+        textarea:focus {
+            outline: none;
+        }
+
+        .copy-btn-container {
             display: flex;
-            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
         }
 
-        .copy-btn {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            margin-left: 1rem;
+        button.copy-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .copy-btn:hover {
-            background-color: #f3f4f6;
-            color: var(--text-primary);
-            transform: none;
+        button.copy-btn:hover {
+            background-color: #218838;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         .error-message {
-            display: none;
-            color: #ef4444;
+            color: var(--error-color);
             font-size: 0.9rem;
-            margin-top: 1rem;
-            text-align: center;
+            margin-top: 5px;
+            display: none;
         }
 
-        @media (max-width: 600px) {
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
             }
-            
-            input[type="number"] {
-                width: 100%;
-            }
-            
-            button {
-                width: 100%;
+            textarea {
+                height: 180px;
             }
         }
     </style>
@@ -178,152 +187,131 @@
 
 <div class="container">
     <header>
-        <h1>CipherGen</h1>
-        <div class="subtitle">Secure Alphanumeric Password Generator (No-Symbol Edition)</div>
+        <h1>Secure Password Generator</h1>
     </header>
 
-    <main>
-        <section class="controls">
-            <label for="passwordCount" style="margin-right: 0.5rem;">Quantity:</label>
-            <input type="number" id="passwordCount" min="1" value="1" placeholder="Enter count">
-            
-            <button id="generateBtn">Generate</button>
-        </section>
+    <div class="input-group">
+        <label for="passwordCount">Number of Passwords</label>
+        <input type="number" id="passwordCount" placeholder="e.g. 5" min="1">
+        <div class="error-message" id="errorMessage">Please enter at least one password.</div>
+    </div>
 
-        <div id="errorMessage" class="error-message">
-            Please enter a valid positive integer.
+    <button class="generate-btn" onclick="generatePasswords()">Generate</button>
+
+    <div class="output-section">
+        <textarea id="passwordOutput" readonly placeholder="Generated passwords will appear here..."></textarea>
+        <div class="copy-btn-container">
+            <button class="copy-btn" onclick="copyToClipboard()">Copy All</button>
         </div>
-
-        <section class="output-section">
-            <div class="output-container">
-                <div id="passwordOutput" class="password-display"></div>
-                <button id="copyBtn" class="copy-btn">Copy to Clipboard</button>
-            </div>
-        </section>
-    </main>
+    </div>
 </div>
 
+<div class="toast" id="toastNotification">Copied to clipboard!</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const generateBtn = document.getElementById('generateBtn');
-        const copyBtn = document.getElementById('copyBtn');
-        const countInput = document.getElementById('passwordCount');
-        const outputDiv = document.getElementById('passwordOutput');
-        const errorMsg = document.getElementById('errorMessage');
+    // Configuration based on Technical Specification
+    const CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const EXCLUDED_CHARS = new Set(['0', 'O', '1', 'l', '!']);
+    
+    // DOM Elements
+    const inputField = document.getElementById('passwordCount');
+    const outputArea = document.getElementById('passwordOutput');
+    const errorMessage = document.getElementById('errorMessage');
+    const toast = document.getElementById('toastNotification');
 
-        // Character Set: [a-z] + [A-Z] + [2-9]
-        // Explicitly excludes 0, O, 1, l, ! as per spec
-        const CHAR_SET = "23456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    /**
+     * Generates a single random password of length 10.
+     * Implements exclusion logic for specific characters using Fisher-Yates shuffle.
+     */
+    function generateSinglePassword() {
+        let pool = CHARACTERS.split('').sort(() => 0.5 - Math.random());
+        
+        // Filter out excluded characters from the shuffled pool
+        pool = pool.filter(char => !EXCLUDED_CHARS.has(char));
 
-        /**
-         * Generates a single random string of specified length using crypto.getRandomValues
-         */
-        function generateSecureString(length) {
-            // Fix 1: Check for MAX_SAFE_INTEGER to prevent RangeError
-            if (length > Number.MAX_SAFE_INTEGER || length < 0) return '';
+        if (pool.length === 0) {
+            console.error("No valid characters left in pool");
+            return "";
+        }
 
-            const array = new Uint32Array(length);
-            
-            // Fix 2: Polyfill for crypto.getRandomValues for older browsers
-            if (!window.crypto && !window.crypto.subtle) {
-                window.crypto = { getRandomValues: (array) => {
-                    let bytes = new Uint8Array(array.length);
-                    window.crypto.randomFillSync(bytes);
-                    array.set(bytes, 0);
-                }};
-            }
+        let password = '';
+        for (let i = 0; i < 10; i++) {
+            // Randomly select a character from the filtered pool
+            const randomIndex = Math.floor(Math.random() * pool.length);
+            password += pool[randomIndex];
+        }
 
+        return password;
+    }
+
+    /**
+     * Main generation logic.
+     */
+    function generatePasswords() {
+        // Validation Logic
+        const countValue = inputField.value.trim();
+        
+        if (!countValue || parseInt(countValue) <= 0) {
+            errorMessage.style.display = 'block';
+            outputArea.value = '';
+            return;
+        }
+
+        errorMessage.style.display = 'none';
+
+        // Generate Logic
+        const count = parseInt(countValue);
+        const generatedPasswords = [];
+
+        for (let i = 0; i < count; i++) {
+            generatedPasswords.push(generateSinglePassword());
+        }
+
+        // Output Display
+        outputArea.value = generatedPasswords.join('\n');
+    }
+
+    /**
+     * Copies the content of the textarea to the clipboard.
+     */
+    function copyToClipboard() {
+        const text = outputArea.value;
+        
+        if (!text) return;
+
+        // Check for modern browser support first
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                showToast();
+            });
+        } else {
+            // Fallback for older browsers (IE/old Safari)
+            const textarea = document.getElementById('passwordOutput');
+            textarea.select();
             try {
-                window.crypto.getRandomValues(array);
-                
-                let result = '';
-                for (let i = 0; i < length; i++) {
-                    // Fix 3: Use modulo to map Uint32 values to CHAR_SET indices
-                    // This is efficient enough for typical use cases compared to string concatenation overhead
-                    result += CHAR_SET[array[i] % CHAR_SET.length];
-                }
-                return result;
-            } catch (e) {
-                console.error("Error generating secure string:", e);
-                return '';
-            }
-        }
-
-        /**
-         * Generates N passwords and concatenates them into a single line
-         */
-        function generateBulk(count) {
-            // Fix 4: Use Array.from with join to avoid string concatenation overhead in loops
-            const parts = [];
-            for (let i = 0; i < count; i++) {
-                if (i > 0) {
-                    parts.push(' '); // Separator as per spec
-                }
-                parts.push(generateSecureString(10));
-            }
-            return parts.join('');
-        }
-
-        /**
-         * Handles the generation logic and UI updates
-         */
-        function handleGenerate() {
-            const rawValue = countInput.value;
-            
-            // Fix 7: Explicit check for empty string before parsing
-            if (!rawValue.trim()) {
-                errorMsg.textContent = "Please enter a valid positive integer.";
-                errorMsg.style.display = 'block';
-                outputDiv.textContent = '';
-                return;
-            }
-
-            const count = parseInt(rawValue, 10);
-
-            // Fix 6: Simplified validation logic
-            if (isNaN(count) || !Number.isFinite(count) || count <= 0) {
-                errorMsg.style.display = 'block';
-                outputDiv.textContent = '';
-                return;
-            }
-
-            errorMsg.style.display = 'none';
-            
-            const result = generateBulk(count);
-            outputDiv.textContent = result;
-        }
-
-        /**
-         * Handles the copy to clipboard functionality
-         */
-        async function handleCopy() {
-            const text = outputDiv.textContent;
-            if (!text) return;
-
-            try {
-                await navigator.clipboard.writeText(text);
-                // Visual feedback for success (optional, but good UX)
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = "Copied!";
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                }, 1500);
-            } catch (err) {
-                console.error('Could not copy text: ', err);
-                // Fallback for older browsers or permission denied
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
                 document.execCommand("copy");
-                document.body.removeChild(textArea);
+                showToast();
+            } catch (err) {
+                console.error('Fallback copy failed: ', err);
+                // Only show toast if we actually reached here, or just log the error
+                showToast(); 
             }
         }
+    }
 
-        // Event Listeners
-        generateBtn.addEventListener('click', handleGenerate);
-        copyBtn.addEventListener('click', handleCopy);
-    });
+    /**
+     * Displays a toast notification.
+     */
+    function showToast() {
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2000);
+    }
 </script>
+
 </body>
 </html>
