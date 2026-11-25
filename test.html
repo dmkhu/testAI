@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фрося | Digital Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --dark-green: #1b5e20;
+            --earth-brown: #5d4037;
+            --light-gray: #eceff1;
+            --bg-color: #f4f4f9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, #e8f5e9, #fff);
+            border-bottom: 3px solid var(--primary-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-pic-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cat-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--primary-green);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .cat-img:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 15px 30px rgba(46, 125, 50, 0.5);
+        }
+
+        h1 {
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .role {
+            color: var(--earth-brown);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.2s forwards;
+        }
+
+        section {
+            padding: 40px 20px;
+            border-bottom: 1px solid #eee;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: var(--dark-green);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--earth-brown);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .skills-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-left: 4px solid var(--primary-green);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .skill-item:nth-child(1) { animation: slideInLeft 0.5s forwards 0.2s; }
+        .skill-item:nth-child(2) { animation: slideInLeft 0.5s forwards 0.4s; }
+        .skill-item:nth-child(3) { animation: slideInLeft 0.5s forwards 0.6s; }
+        .skill-item:nth-child(4) { animation: slideInLeft 0.5s forwards 0.8s; }
+        .skill-item:nth-child(5) { animation: slideInLeft 0.5s forwards 1.0s; }
+
+        .skill-item:hover {
+            background-color: #dcedc8;
+            transform: translateX(10px);
+        }
+
+        .reviews-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .review-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: 45%;
+            min-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .review-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(46, 125, 50, 0.15);
+        }
+
+        .contact-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: var(--earth-brown);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .contact-btn.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-btn:hover {
+            background-color: #3e2723;
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 15px; }
+            .review-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="profile-pic-container">
+            <!-- ВАЖНО: Здесь должна быть тег img с src="cat.jpg" -->
+            <img src="https://via.placeholder.com/150/2e7d32/ffffff?text=Frosia" alt="Фото Фрося" class="cat-img">
+        </div>
+        <h1>Фрося</h1>
+        <p class="role">КОШКА!!!</p>
+    </header>
+
+    <section id="about">
+        <h2>Обо мне</h2>
+        <p>Привет! Я — Фрося. Я не просто кошка, я настоящий профессионал в области ухода за домом и создания уютной атмосферы. Мой опыт работы: "Бег по квартире", "Ловля мышей (виртуально)", "Освежать воздух".</p>
+        <br>
+        <p style="text-align: center; font-style: italic; color: var(--earth-brown);">"Я люблю, когда люди улыбаются."</p>
+    </section>
+
+    <section id="skills">
+        <h2>Навыки и компетенции</h2>
+        <ul class="skills-list">
+            <li class="skill-item">🐾 Опыт работы: 100%</li>
+            <li class="skill-item">🏠 Уборка: Профессиональная</li>
+            <li class="skill-item">📱 Социальные навыки: Высокий</li>
+            <li class="skill-item">🎮 Любимая игра: "Медведь-игрок"</li>
+            <li class="skill-item">💤 Сонливость: Уровень 10/10</li>
+        </ul>
+    </section>
+
+    <section id="reviews">
+        <h2>Отзывы клиентов</h2>
+        <div class="reviews-container">
+            <div class="review-card glass-card">
+                <p><strong>"Фрося — это волшебство!"</strong></p>
+                <p>Моя кошка, которая не только чистит дом, но и делает его уютнее. Она всегда знает, когда пора почесаться.</p>
+            </div>
+            <div class="review-card glass-card">
+                <p><strong>"Лучший кот в округе"</strong></p>
+                <p>Учитывать не только вкусную еду, но и чистоту. Рекомендую! Она даже умеет открывать коробки.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Связаться со мной</h2>
+        <a href="#" class="contact-btn">WhatsApp: +7 (999) 000-00-00</a>
+        <a href="#" class="contact-btn">Telegram: @frosia_cat</a>
+        <a href="#" class="contact-btn">Email: frosia@example.com</a>
+    </section>
+
+    <footer>
+        &copy; 2023 Фрося. Все права защищены (или просто пропущено).
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sections = document.querySelectorAll('section');
+        const contactBtns = document.querySelectorAll('.contact-btn');
+
+        const observerOptions = {
+            root: null,
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(el => observer.observe(el));
+        contactBtns.forEach(el => observer.observe(el));
+    });
+</script>
+
+</body>
+</html>
