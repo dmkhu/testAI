@@ -1,1 +1,163 @@
-[web-coder] Ошибка: 'message'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightSwitch-Web</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --bulb-off: #333333;
+            --bulb-on: #ffd700;
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .switch-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Accessibility Button Wrapper */
+        .switch-container button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* Bulb Visuals */
+        .bulb {
+            width: 80px;
+            height: 80px;
+            background-color: var(--bulb-off);
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* The Glow Effect (Pseudo-element) */
+        .bulb::after {
+            content: "";
+            position: absolute;
+            inset: -20%; /* Expands beyond the bulb size */
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+            transition: all 0.3s ease;
+        }
+
+        /* ON State Styling */
+        .bulb.on {
+            background-color: var(--bulb-on);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .bulb.on::after {
+            background-color: transparent;
+            box-shadow: 
+                0 0 60px rgba(255, 215, 0, 0.9), 
+                inset 0 0 30px rgba(255, 255, 255, 0.8);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Animation for flickering */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), inset 0 0 10px white;
+            }
+            100% {
+                box-shadow: 0 0 70px rgba(255, 215, 0, 1), inset 0 0 20px white;
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .switch-container {
+                width: 160px;
+                height: 160px;
+            }
+            .bulb {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="switch-container" role="button" tabindex="0" aria-label="Toggle light" aria-pressed="false">
+        <button type="button" id="light-toggle">
+            <div class="bulb"></div>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const switchBtn = document.getElementById('light-toggle');
+            const bulb = switchBtn.querySelector('.bulb');
+            
+            // State management
+            let isLightOn = false;
+
+            function toggleLight() {
+                // Toggle Visual State
+                if (isLightOn) {
+                    bulb.classList.remove('on');
+                } else {
+                    bulb.classList.add('on');
+                }
+
+                // Update Accessibility Attributes
+                const newState = isLightOn ? 'true' : 'false';
+                switchBtn.setAttribute('aria-pressed', newState);
+                
+                // Announce state change for screen readers
+                switchBtn.setAttribute('aria-label', `Light is ${newState === 'true' ? 'ON' : 'OFF'}`);
+
+                // Update internal state
+                isLightOn = !isLightOn;
+            }
+
+            // Event Listeners
+            switchBtn.addEventListener('click', toggleLight);
+            
+            // Keyboard support (Space and Enter)
+            switchBtn.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault(); // Prevent default focus behavior
+                    toggleLight();
+                }
+            });
+
+            // Initial state setup
+            isLightOn = false;
+        });
+    </script>
+</body>
+</html>
