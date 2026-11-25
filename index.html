@@ -1,307 +1,425 @@
 ```html
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фрося — Резюме</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>B1 English Mastery | American Flag Theme</title>
     <style>
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-green: #4A5D43;
-            --secondary-gray: #7F8C8D;
-            --bg-color: #E0E5E0;
-            --accent-brown: #A67B5B;
+            --primary-yellow: #FFD700;
+            --primary-red: #CE1126;
+            --primary-white: #FFFFFF;
             --text-dark: #333333;
+            --text-light: #666666;
+            --bg-offwhite: #F9F9F9;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-offwhite);
             color: var(--text-dark);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--primary-green);
-        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
 
-        /* --- Header --- */
+        /* --- HEADER --- */
         header {
-            background-color: white;
-            padding: 20px 40px;
+            background: linear-gradient(90deg, var(--primary-red) 33%, var(--primary-white) 33%, var(--primary-white) 66%, var(--primary-yellow) 66%);
+            height: 70px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: fixed;
-            width: 100%;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: sticky;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-weight: 700;
             font-size: 1.5rem;
-            color: var(--accent-brown);
+            font-weight: bold;
+            color: var(--primary-white);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin-left: 20px;
-            font-size: 0.9rem;
+            color: var(--primary-white);
+            font-weight: 500;
             transition: color 0.3s;
         }
 
         nav a:hover {
-            color: var(--primary-green);
+            color: #b8461f; /* Darker red on hover */
         }
 
-        /* --- Hero Section --- */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 120px 10% 60px;
-            min-height: 80vh;
-            background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%);
-        }
-
-        .hero-text {
-            max-width: 500px;
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease-out;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            background-color: var(--primary-green);
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 5px;
+        .btn-cta {
+            background-color: var(--primary-yellow);
+            color: var(--primary-red);
+            padding: 8px 20px;
+            border-radius: 30px;
             font-weight: bold;
-            transition: transform 0.2s, background-color 0.2s;
-            display: inline-block;
+            transition: transform 0.2s;
         }
 
-        .btn:hover {
-            background-color: var(--accent-brown);
-            transform: translateY(-2px);
+        .btn-cta:hover {
+            transform: scale(1.05);
+            background-color: #e6c800;
         }
 
-        /* --- Profile Section --- */
-        .profile-container {
+        /* --- HERO SECTION --- */
+        .hero {
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), var(--primary-yellow)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f4d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 40px 10%;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            margin-top: -50px;
+            justify-content: center;
+            text-align: center;
+            color: var(--primary-white);
+            padding: 0 20px;
         }
 
-        .profile-img {
-            max-width: 300px;
-            width: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            height: auto;
-            animation: float 6s ease-in-out infinite; 
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .profile-info h2 {
-            font-size: 2rem;
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-yellow);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- RULES (L1-L2) --- */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .rule-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-yellow);
+            transition: transform 0.3s;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .rule-card h3 {
+            color: var(--primary-red);
             margin-bottom: 10px;
         }
 
-        .info-row {
+        /* --- B1 RECOMMENDATIONS --- */
+        .recommendations {
+            background-color: white;
+        }
+
+        .rec-container {
             display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .info-label {
-            color: var(--accent-brown);
-            font-weight: bold;
-        }
-
-        /* --- Skills Section --- */
-        .skills-section {
-            padding: 60px 10%;
-            text-align: center;
-        }
-
-        .skills-grid {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 40px;
+            align-items: center;
+            gap: 40px;
         }
 
-        .skill-tag {
-            background-color: var(--bg-color);
-            color: var(--primary-green);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+        .rec-text {
+            flex: 1;
+            min-width: 300px;
         }
 
-        .skill-tag:hover {
-            background-color: var(--accent-brown);
+        .rec-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .rec-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: start;
+        }
+
+        .rec-icon {
+            color: var(--primary-yellow);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* --- TEST SECTION --- */
+        .test-section {
+            background-color: var(--primary-white);
+        }
+
+        .quiz-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .question {
+            margin-bottom: 30px;
+        }
+
+        .options label {
+            display: block;
+            background: #f1f1f1;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .options label:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-check {
+            background-color: var(--primary-red);
             color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
         }
 
-        /* --- Footer --- */
+        .btn-check:hover {
+            background-color: #a00f1e;
+        }
+
+        /* --- FOOTER --- */
         footer {
-            background-color: var(--primary-green);
+            background-color: var(--primary-red);
             color: white;
             text-align: center;
-            padding: 40px 10%;
+            padding: 40px 20px;
         }
 
         footer p {
             opacity: 0.8;
-            font-size: 0.9rem;
         }
 
-        /* Анимация появления при скролле */
-        .fade-in {
-            opacity: 1 !important;
-            transform: translateX(0) !important;
-        }
-
-        /* Адаптив */
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column-reverse;
-                text-align: center;
-                padding-top: 20px;
-            }
-            .hero-text h1 { font-size: 2rem; }
-            .profile-container { padding: 30px 5%; }
-            nav { display: none; } 
+            .hero-content h1 { font-size: 2.5rem; }
+            nav ul { display: none; } 
+            .logo { flex-grow: 1; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+    <!-- Header -->
     <header>
-        <div class="logo">Фрося</div>
+        <div class="logo">EnglishB1<span style="color:var(--primary-yellow)">Master</span></div>
         <nav>
-            <a href="#about">Обо мне</a>
-            <a href="#skills">Хобби</a>
-            <a href="#contact">Контакты</a>
+            <ul>
+                <li><a href="#rules">Rules</a></li>
+                <li><a href="#recommendations">B1 Tips</a></li>
+                <li><a href="#test">Test</a></li>
+            </ul>
         </nav>
+        <a href="#" class="btn-cta">Start Learning</a>
     </header>
 
-    <!-- Главный экран -->
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-text" id="hero-text">
-            <h1>Привет! Я Фрося.</h1>
-            <p>Милая, пушистая и немного капризная. Моя цель — быть любимой всеми и получать много лапок!</p>
-            <a href="#contact" class="btn">Написать хозяину</a>
+        <div class="hero-content">
+            <h1>Master the English B1 Level</h1>
+            <p>Learn grammar, vocabulary, and speaking patterns designed specifically for intermediate learners. Get ready to communicate confidently.</p>
+            <a href="#rules" class="btn-cta" style="background: var(--primary-red); color: white;">Explore Rules</a>
         </div>
     </section>
 
-    <!-- Карточка профиля -->
-    <section id="about" class="profile-container">
-        <!-- Заглушка для картинки, так как cat.jpg может не быть -->
-        <img src="https://images.unsplash.com/photo-1574678329501-6c8d2a1e8b3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Фото Фрося" class="profile-img">
+    <!-- Rules Section (L1-L2) -->
+    <section id="rules">
+        <h2 class="section-title">English Grammar Rules</h2>
+        <p style="text-align:center; margin-bottom:40px;">The foundation of B1 is mastering the basics.</p>
         
-        <div class="profile-info">
-            <h2>Фрося</h2>
-            <div class="info-row">
-                <span class="info-label">Возраст:</span>
-                <span>1 год 3 месяца</span>
+        <div class="rules-grid">
+            <!-- Rule 1 -->
+            <div class="rule-card">
+                <h3>The Present Simple</h3>
+                <p>Use <strong>Subject + Verb</strong>. For regular verbs, add -s only for he/she/it. (e.g., She <em>plays</em> soccer). For irregular verbs, memorize the forms.</p>
             </div>
-            <div class="info-row">
-                <span class="info-label">Вес:</span>
-                <span>4.5 кг</span>
+
+            <!-- Rule 2 -->
+            <div class="rule-card">
+                <h3>The Present Continuous</h3>
+                <p>Use <strong>am/is/are + verb-ing</strong>. It is used for actions happening now or temporary situations. (e.g., I <em>am reading</em> a book).</p>
             </div>
-            <div class="info-row">
-                <span class="info-label">Город:</span>
-                <span>Краснодар, ул. Мечты</span>
+
+            <!-- Rule 3 -->
+            <div class="rule-card">
+                <h3>The Past Simple</h3>
+                <p>Use <strong>Subject + Verb-ed</strong>. It is used for completed actions in the past. (e.g., He <em>went</em> to the store yesterday).</p>
+            </div>
+
+            <!-- Rule 4 -->
+            <div class="rule-card">
+                <h3>The Future Simple</h3>
+                <p>Use <strong>Subject + will + verb</strong>. It is used for predictions, promises, or future plans. (e.g., I <em>will call</em> you).</p>
+            </div>
+
+            <!-- Rule 5 -->
+            <div class="rule-card">
+                <h3>Subject-Verb Agreement</h3>
+                <p>Ensure the verb matches the subject number. Singular (He) + singular verb, Plural (They) + plural verb.</p>
             </div>
         </div>
     </section>
 
-    <!-- Секция навыков -->
-    <section id="skills" class="skills-section">
-        <h2>Мои навыки и хобби</h2>
-        <p style="max-width: 600px; margin: 0 auto;">Фрося умеет делать следующее:</p>
+    <!-- B1 Recommendations Section -->
+    <section id="recommendations" class="recommendations">
+        <h2 class="section-title">B1: Intermediate Strategies</h2>
         
-        <div class="skills-grid">
-            <span class="skill-tag">🎵 Мурлычет</span>
-            <span class="skill-tag">💧 Пьет воду</span>
-            <span class="skill-tag">🥘 Ест котлеты</span>
-            <span class="skill-tag">🛌 Сонит</span>
-            <span class="skill-tag">👀 Смотрит</span>
+        <div class="rec-container">
+            <div class="rec-text">
+                <h2>Top Tips for Level B1</h2>
+                <p style="margin-bottom: 20px;">Level B1 is where you move from "understanding the main points" to "speaking with confidence". Here is how to improve:</p>
+                
+                <ul class="rec-list">
+                    <li>
+                        <span class="rec-icon">🗣️</span>
+                        <div><strong>Focus on Pronunciation.</strong> Don't just memorize words; learn the sounds (Phonics). Use apps like Duolingo or Anki to track your progress.</div>
+                    </li>
+                    <li>
+                        <span class="rec-icon">📚</span>
+                        <div><strong>Read "B2" level articles.</strong> Start with simple news sites (BBC Learning English) and gradually move to more complex topics like tech or politics.</div>
+                    </li>
+                    <li>
+                        <span class="rec-icon">💬</span>
+                        <div><strong>Speak daily.</strong> Talk to yourself in the mirror or record a 1-minute video about your day. Speaking is the best way to learn grammar rules.</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Visual decoration for B1 -->
+            <div style="flex: 1; background-color: #e0f7fa; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #006064;">
+                <span style="font-size: 5rem;">🎓</span>
+            </div>
         </div>
     </section>
 
-    <!-- Подвал -->
-    <footer id="contact">
-        <p>Связь: 8 (900) 000-00-00 | Email: frosa@email.com</p>
-        <br>
-        <p>&copy; 2023 Фрося. Все права защищены.</p>
+    <!-- Test Section -->
+    <section id="test" class="test-section">
+        <h2 class="section-title">B1 English Quiz</h2>
+        <p style="text-align:center; margin-bottom:30px;">Test your knowledge. Time: 15 minutes.</p>
+
+        <div class="quiz-container">
+            <!-- Question 1 -->
+            <div class="question">
+                <p><strong>1. Choose the correct form of the verb in brackets.</strong></p>
+                <p>I usually _____ (go) to the gym on Mondays, but today I _____ (stay) at home.</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> a. go / am going</label>
+                    <label><input type="radio" name="q1" value="b"> a. goes / is going</label>
+                    <label><input type="radio" name="q1" value="c"> b. go / will go</label>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question">
+                <p><strong>2. Which sentence is grammatically correct?</strong></p>
+                <p>She _____ a book in her hand.</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> a. reads</label>
+                    <label><input type="radio" name="q2" value="b"> b. read</label>
+                    <label><input type="radio" name="q2" value="c"> c. reading</label>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question">
+                <p><strong>3. Choose the correct future tense.</strong></p>
+                <p>I am going to visit my grandparents next week because they _____ (have) a birthday.</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> a. will have</label>
+                    <label><input type="radio" name="q3" value="b"> b. is having</label>
+                    <label><input type="radio" name="q3" value="c"> c. has had</label>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question">
+                <p><strong>4. Which word is an adjective?</strong></p>
+                <p style="margin-bottom:10px;">A) Beautiful (Adj)</p>
+                <p style="margin-bottom:10px;">B) Go (Verb)</p>
+                <p style="margin-bottom:10px;">C) The (Article)</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> a. Beautiful</label>
+                    <label><input type="radio" name="q4" value="b"> b. Go</label>
+                    <label><input type="radio" name="q4" value="c"> c. The</label>
+                </div>
+            </div>
+
+            <button class="btn-check" onclick="alert('Quiz completed! Check your score below.')">Check Answers</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 EnglishB1Master. All rights reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px;">Designed for American Flag Theme</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, observerOptions);
-
-            const elementsToAnimate = document.querySelectorAll('.hero-text, .profile-info, .skills-grid');
-            elementsToAnimate.forEach(el => observer.observe(el));
-        });
-    </script>
 </body>
 </html>
 ```
