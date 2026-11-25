@@ -3,226 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Light Bulb UI</title>
+    <title>Интерактивная Лампочка</title>
     <style>
         :root {
-            --bg-color: #2b2b2b;
-            --bulb-off-color: #555;
-            --bulb-on-color: #f7df5e;
+            --bg-color: #1a1a1a;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
             --text-color: #ffffff;
-            --btn-bg: #444;
-            --glow-color: rgba(247, 223, 94, 0.6);
+            --bulb-off: #333;
+            --bulb-on: #ffeb3b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             overflow: hidden;
         }
 
-        .main-container {
+        main {
             text-align: center;
-            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .light-bulb-wrapper {
-            position: relative;
+        .bulb-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bulb {
             width: 150px;
-            height: 220px;
-            margin: 0 auto 30px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.175);
-        }
-
-        .light-bulb-icon {
-            width: 100%;
-            height: 100%;
-            background-color: var(--bulb-off-color);
-            border-radius: 50% 50% 40% 40%;
-            box-shadow: inset 10px 10px 30px rgba(0, 0, 0, 0.8);
-            position: relative;
-            z-index: 2;
-        }
-
-        .light-bulb-icon::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 40px;
-            background-color: var(--bulb-off-color);
+            height: 150px;
+            background-color: var(--bulb-off);
             border-radius: 50%;
-            z-index: 3;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
         }
 
-        .light-bulb-text {
+        .bulb.on {
+            background-color: var(--bulb-on);
+            box-shadow: 
+                inset 0 0 20px rgba(0, 0, 0, 0.5),
+                0 0 100px var(--bulb-on),
+                0 0 200px var(--bulb-on);
+            animation: glow-pulse 1.5s infinite alternate;
+        }
+
+        @keyframes glow-pulse {
+            0% {
+                box-shadow: 
+                    inset 0 0 20px rgba(0, 0, 0, 0.5),
+                    0 0 60px var(--bulb-on),
+                    0 0 120px var(--bulb-on);
+            }
+            100% {
+                box-shadow: 
+                    inset 0 0 20px rgba(0, 0, 0, 0.5),
+                    0 0 120px var(--bulb-on),
+                    0 0 240px var(--bulb-on);
+            }
+        }
+
+        .switch-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button.switch-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        button.switch-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        button.switch-btn:active {
+            transform: scale(0.95);
+        }
+
+        .status-text {
+            margin-top: 30px;
             font-size: 1.2rem;
             opacity: 0.7;
-            transition: opacity 0.3s;
+            letter-spacing: 1px;
         }
 
-        .control-btn {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            background-color: var(--btn-bg);
-            color: var(--text-color);
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: all 0.2s ease;
-            font-weight: 600;
-        }
-
-        .control-btn:hover {
-            background-color: #555;
-            transform: translateY(-2px);
-        }
-
-        .control-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* Состояния */
-        body.light-on .light-bulb-wrapper {
-            transform: scale(1.1);
-        }
-
-        body.light-on .light-bulb-icon {
-            background-color: var(--bulb-on-color);
-            box-shadow: 
-                0 0 30px var(--glow-color),
-                inset 0 0 15px rgba(255, 255, 255, 0.8);
-        }
-
-        body.light-on .light-bulb-text {
-            opacity: 0;
-        }
-
-        body.light-on .control-btn {
-            background-color: var(--bulb-on-color);
-            color: #2b2b2b;
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        /* Анимация света */
-        @keyframes flicker {
-            0% { opacity: 1; }
-            50% { opacity: 0.9; }
-            100% { opacity: 1; }
-        }
-
-        body.light-on .light-bulb-icon::before {
-            animation: flicker 2s infinite ease-in-out;
+        /* Адаптивность для мобильных */
+        @media (max-width: 600px) {
+            .bulb-container {
+                width: 150px;
+                height: 150px;
+                margin-bottom: 20px;
+            }
+            .bulb {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
 <body>
 
-<main class="main-container">
-    <div id="bulb-wrapper" class="light-bulb-wrapper">
-        <div class="light-bulb-icon"></div>
-    </div>
-    <button id="toggleBtn" class="control-btn">ВКЛ / ВЫКЛ</button>
-</main>
+    <main>
+        <div class="bulb-container">
+            <div class="bulb" id="bulb"></div>
+        </div>
 
-<script>
-    // Состояние системы
-    const state = {
-        isLightOn: false,
-        lastActionTime: null
-    };
+        <div class="switch-container">
+            <button class="switch-btn" id="toggleBtn" aria-label="Переключить свет"></button>
+        </div>
 
-    // Элементы DOM
-    const bodyElement = document.body;
-    const btnElement = document.getElementById('toggleBtn');
-    const bulbWrapper = document.getElementById('bulb-wrapper');
-    const textElement = document.querySelector('.light-bulb-text');
+        <div class="status-text" id="statusText">Ожидание...</div>
+    </main>
 
-    // Аудио контекст (синтезатор звука)
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    <script type="module">
+        const bulb = document.getElementById('bulb');
+        const btn = document.getElementById('toggleBtn');
+        const statusText = document.getElementById('statusText');
 
-    function playSound(type) {
-        try {
-            if (state.isLightOn) return; // Если уже включено, не издаем звук выключения
-            
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
+        // Инициализация состояния
+        let isOn = false;
 
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            if (type === 'power-on') {
-                // Звук ВКЛ: высокий пик, быстрый спад (тихий звук)
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.4);
-            } else if (type === 'power-off') {
-                // Звук ВЫКЛ: резкий звук отключения (похож на "клань")
-                oscillator.type = 'sawtooth';
-                oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
-                oscillator.start();
-                oscillator.stop(audioCtx.currentTime + 0.6);
+        function updateStatus() {
+            if (isOn) {
+                statusText.textContent = "Свет включен";
+                statusText.style.color = "#ffeb3b";
+            } else {
+                statusText.textContent = "Свет выключен";
+                statusText.style.color = "#ffffff";
             }
-        } catch (e) {
-            console.warn('Audio context not available or user interaction required first');
         }
-    }
 
-    function updateUI() {
-        if (state.isLightOn) {
-            bodyElement.classList.add('light-on');
-            textElement.textContent = "Включена";
-            textElement.style.opacity = 1;
-            btnElement.textContent = "ВЫКЛ";
-        } else {
-            bodyElement.classList.remove('light-on');
-            textElement.textContent = "Выключена";
-            textElement.style.opacity = 0.7;
-            btnElement.textContent = "ВКЛ";
+        function toggleLight() {
+            if (!isOn) {
+                // Включение: случайная задержка 0.5s - 1.5s
+                const randomDelay = Math.random() * (1.5 - 0.5) + 0.5;
+                
+                setTimeout(() => {
+                    isOn = true;
+                    bulb.classList.add('on');
+                    updateStatus();
+                }, randomDelay * 1000);
+            } else {
+                // Выключение: мгновенное
+                isOn = false;
+                bulb.classList.remove('on');
+                updateStatus();
+            }
         }
-    }
 
-    function toggleLight() {
-        const now = Date.now();
+        // Обработчики событий
+        btn.addEventListener('click', toggleLight);
         
-        // Проверка на спам (опционально, можно убрать)
-        if (!state.lastActionTime || (now - state.lastActionTime) < 500) return;
+        // Поддержка клавиш (Пробел или Enter)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Enter') {
+                toggleLight();
+            }
+        });
 
-        // Логика переключения
-        state.isLightOn = !state.isLightOn;
-        state.lastActionTime = now;
-        
-        playSound(state.isLightOn ? 'power-on' : 'power-off');
-        updateUI();
-    }
-
-    // Обработчики событий
-    btnElement.addEventListener('click', toggleLight);
-    
-    // Поддержка свайпов на мобильных (простая реализация)
-    let touchStartY = 0;
-    document.body.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
-    document.body.addEventListener('touchend', e => {
-        if (touchStartY !== undefined && Math.abs(e.changedTouches[0].clientY - touchStartY) > 50) {
-            toggleLight();
-        }
-        touchStartY = null;
-    });
-
-</script>
+        // Инициализация при загрузке
+        updateStatus();
+    </script>
 </body>
 </html>
