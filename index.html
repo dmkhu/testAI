@@ -3,161 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LightSwitch-Web</title>
+    <title>Secure Password Generator</title>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --bulb-off: #333333;
-            --bulb-on: #ffd700;
-            --text-color: #ffffff;
+            --primary-color: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            padding: 2rem 1rem;
         }
 
-        .switch-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        /* Accessibility Button Wrapper */
-        .switch-container button {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .container {
             width: 100%;
-            height: 100%;
-            border: none;
-            background: transparent;
+            max-width: 600px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
             outline: none;
-            padding: 0;
-            margin: 0;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .output-section {
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .password-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .password-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .password-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 1rem;
             cursor: pointer;
         }
 
-        /* Bulb Visuals */
-        .bulb {
-            width: 80px;
-            height: 80px;
-            background-color: var(--bulb-off);
-            border-radius: 50%;
-            position: relative;
-            z-index: 1;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        .password-text {
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            word-break: break-all;
+            flex-grow: 1;
         }
 
-        /* The Glow Effect (Pseudo-element) */
-        .bulb::after {
-            content: "";
-            position: absolute;
-            inset: -20%; /* Expands beyond the bulb size */
-            background-color: transparent;
-            border-radius: 50%;
-            box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+        .copy-btn {
+            background-color: #6b7280;
+            color: white;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .copy-btn:hover {
+            background-color: #4b5563;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #10b981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.3s ease;
+            z-index: 100;
         }
 
-        /* ON State Styling */
-        .bulb.on {
-            background-color: var(--bulb-on);
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.8);
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .bulb.on::after {
-            background-color: transparent;
-            box-shadow: 
-                0 0 60px rgba(255, 215, 0, 0.9), 
-                inset 0 0 30px rgba(255, 255, 255, 0.8);
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        /* Animation for flickering */
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), inset 0 0 10px white;
-            }
-            100% {
-                box-shadow: 0 0 70px rgba(255, 215, 0, 1), inset 0 0 20px white;
-            }
-        }
-
-        /* Responsive Adjustments */
         @media (max-width: 480px) {
-            .switch-container {
-                width: 160px;
-                height: 160px;
+            body {
+                padding: 1rem;
             }
-            .bulb {
-                width: 60px;
-                height: 60px;
+            .container {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="switch-container" role="button" tabindex="0" aria-label="Toggle light" aria-pressed="false">
-        <button type="button" id="light-toggle">
-            <div class="bulb"></div>
-        </button>
+<div class="container">
+    <h1>Secure Password Generator</h1>
+
+    <div class="form-group">
+        <label for="countInput">Number of Passwords</label>
+        <input type="number" id="countInput" value="1" min="1" max="1000">
+        <div class="error-message" id="errorMessage">Please enter a valid positive integer.</div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const switchBtn = document.getElementById('light-toggle');
-            const bulb = switchBtn.querySelector('.bulb');
-            
-            // State management
-            let isLightOn = false;
+    <button onclick="generatePasswords()">Generate Passwords</button>
 
-            function toggleLight() {
-                // Toggle Visual State
-                if (isLightOn) {
-                    bulb.classList.remove('on');
+    <div class="output-section">
+        <label>Password List</label>
+        <div id="passwordList" class="password-list">
+            <!-- Passwords will be injected here -->
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast">Copied to clipboard!</div>
+
+<script>
+    // Configuration for excluded characters to prevent visual confusion
+    const EXCLUDED_CHARS = new Set(['0', 'O', '1', 'l', 'I']);
+
+    /**
+     * Generates a cryptographically secure random string of specified length.
+     * Uses window.crypto.getRandomValues() as per security requirements.
+     */
+    function generateSecureString(length) {
+        const array = new Uint8Array(length);
+        window.crypto.getRandomValues(array);
+        
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            // Convert byte to character code safely
+            // If the byte is > 127, it's not a standard ASCII char. 
+            // We map it to 'x' or handle it based on requirements.
+            const charCode = array[i];
+            
+            if (charCode >= 65 && charCode <= 90) {
+                result += String.fromCharCode(charCode);
+            } else if (charCode >= 97 && charCode <= 122) {
+                result += String.fromCharCode(charCode);
+            } else if (charCode >= 48 && charCode <= 57) {
+                // Check if this digit is in the exclusion list
+                const safeDigit = charCode < 128 ? String.fromCharCode(charCode) : 'x';
+                if (!EXCLUDED_CHARS.has(safeDigit)) {
+                    result += safeDigit;
                 } else {
-                    bulb.classList.add('on');
+                    // If it's an excluded digit, we need to fill the slot with something else.
+                    // We try to find a valid character from the remaining pool (Uppercase or Lowercase)
+                    // Since we are iterating through random bytes, we just pick one that fits.
+                    const upperChar = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                    result += upperChar;
                 }
-
-                // Update Accessibility Attributes
-                const newState = isLightOn ? 'true' : 'false';
-                switchBtn.setAttribute('aria-pressed', newState);
-                
-                // Announce state change for screen readers
-                switchBtn.setAttribute('aria-label', `Light is ${newState === 'true' ? 'ON' : 'OFF'}`);
-
-                // Update internal state
-                isLightOn = !isLightOn;
+            } else {
+                // Fallback to a safe character (e.g., 'x') if mapping fails or hits excluded
+                result += 'x'; 
             }
+        }
+        return result;
+    }
 
-            // Event Listeners
-            switchBtn.addEventListener('click', toggleLight);
+    /**
+     * Main logic to generate and display passwords.
+     */
+    function generatePasswords() {
+        const input = document.getElementById('countInput');
+        const listContainer = document.getElementById('passwordList');
+        const errorMsg = document.getElementById('errorMessage');
+        
+        // Reset UI state
+        listContainer.innerHTML = '';
+        errorMsg.style.display = 'none';
+
+        // Validate Input
+        const count = parseInt(input.value);
+        
+        if (isNaN(count) || count < 1 || count > 1000) {
+            errorMsg.style.display = 'block';
+            return;
+        }
+
+        // Generate Passwords
+        const passwords = [];
+        for (let i = 0; i < count; i++) {
+            passwords.push(generateSecureString(10));
+        }
+
+        // Render List
+        renderList(passwords);
+    }
+
+    /**
+     * Renders the HTML for the password list with checkboxes.
+     */
+    function renderList(passwords) {
+        const container = document.getElementById('passwordList');
+        
+        passwords.forEach((password, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'password-item';
+
+            // Checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `pass-${index}`;
             
-            // Keyboard support (Space and Enter)
-            switchBtn.addEventListener('keydown', (e) => {
-                if (e.key === ' ' || e.key === 'Enter') {
-                    e.preventDefault(); // Prevent default focus behavior
-                    toggleLight();
+            // Password Text
+            const textSpan = document.createElement('span');
+            textSpan.className = 'password-text';
+            textSpan.textContent = password;
+
+            // Copy Button
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = 'Copy';
+            
+            // Event Listener for Copy
+            copyBtn.addEventListener('click', () => {
+                if ('clipboard' in navigator) {
+                    navigator.clipboard.writeText(password).then(() => {
+                        showToast();
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                        alert('Clipboard unavailable. Please try again.');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = password;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast();
                 }
             });
 
-            // Initial state setup
-            isLightOn = false;
+            itemDiv.appendChild(checkbox);
+            itemDiv.appendChild(textSpan);
+            itemDiv.appendChild(copyBtn);
+            
+            container.appendChild(itemDiv);
         });
-    </script>
+    }
+
+    /**
+     * Displays a success toast notification.
+     */
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2000);
+    }
+
+    // Initialize default value on load
+    document.getElementById('countInput').value = '1';
+</script>
+
 </body>
 </html>
