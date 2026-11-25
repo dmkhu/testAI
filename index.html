@@ -1,424 +1,324 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B1 English Mastery | American Flag Theme</title>
+    <title>EnglishPerfect - Present Perfect Tense</title>
     <style>
-        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-yellow: #FFD700;
-            --primary-red: #CE1126;
-            --primary-white: #FFFFFF;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --bg-offwhite: #F9F9F9;
-            --shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --primary: #6C63FF;
+            --secondary: #2A2D3E;
+            --accent: #00D2D3;
+            --bg: #F0F2F5;
+            --card-bg: rgba(255, 255, 255, 0.9);
         }
 
         body {
-            background-color: var(--bg-offwhite);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
-
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-
-        /* --- HEADER --- */
-        header {
-            background: linear-gradient(90deg, var(--primary-red) 33%, var(--primary-white) 33%, var(--primary-white) 66%, var(--primary-yellow) 66%);
-            height: 70px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        nav ul {
-            display: flex;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--primary-white);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #b8461f; /* Darker red on hover */
-        }
-
-        .btn-cta {
-            background-color: var(--primary-yellow);
-            color: var(--primary-red);
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        .btn-cta:hover {
-            transform: scale(1.05);
-            background-color: #e6c800;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), var(--primary-yellow)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f4d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            color: var(--primary-white);
-            padding: 0 20px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* --- SECTIONS GENERAL --- */
-        section {
-            padding: 80px 5%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background-color: var(--primary-yellow);
-            margin: 15px auto 0;
-            border-radius: 2px;
-        }
-
-        /* --- RULES (L1-L2) --- */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .rule-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary-yellow);
-            transition: transform 0.3s;
-        }
-
-        .rule-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .rule-card h3 {
-            color: var(--primary-red);
-            margin-bottom: 10px;
-        }
-
-        /* --- B1 RECOMMENDATIONS --- */
-        .recommendations {
-            background-color: white;
-        }
-
-        .rec-container {
-            display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            gap: 40px;
+            min-height: 100vh;
+            color: var(--secondary);
         }
 
-        .rec-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .rec-text h2 {
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            margin-bottom: 20px;
-        }
-
-        .rec-list li {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: start;
-        }
-
-        .rec-icon {
-            color: var(--primary-yellow);
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-
-        /* --- TEST SECTION --- */
-        .test-section {
-            background-color: var(--primary-white);
-        }
-
-        .quiz-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
+        .app-container {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 600px;
             border-radius: 20px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .question {
-            margin-bottom: 30px;
+        h1 { color: var(--primary); margin-bottom: 0.5rem; }
+        p { color: #666; margin-bottom: 2rem; }
+
+        .screen { display: none; animation: fadeIn 0.5s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .options label {
-            display: block;
-            background: #f1f1f1;
-            padding: 15px;
-            margin-bottom: 10px;
+        input[type="text"] {
+            padding: 12px;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
+            border: 2px solid #ddd;
+            width: 70%;
+            margin-bottom: 1rem;
+            font-size: 1rem;
         }
 
-        .options label:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-check {
-            background-color: var(--primary-red);
+        .btn {
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn:hover { background-color: #5a52d5; transform: scale(1.02); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        
+        .progress-bar {
             width: 100%;
-            margin-top: 20px;
-            transition: background 0.3s;
+            height: 6px;
+            background: #ddd;
+            border-radius: 3px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
-        .btn-check:hover {
-            background-color: #a00f1e;
+        .question-box { margin-bottom: 2rem; min-height: 80px; display: flex; align-items: center; justify-content: center;}
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--primary-red);
+        .option-btn {
+            background: white;
+            border: 2px solid #eee;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover { background: #f9f9f9; border-color: var(--primary); }
+        
+        .correct { background-color: #d4edda !important; border-color: #c3e6cb !important; color: #155724; }
+        .wrong { background-color: #f8d7da !important; border-color: #f5c6cb !important; color: #721c24; }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
             color: white;
-            text-align: center;
-            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
         }
 
-        footer p {
-            opacity: 0.8;
+        .history-list {
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
         }
-
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            nav ul { display: none; } 
-            .logo { flex-grow: 1; text-align: center; }
+        .history-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">EnglishB1<span style="color:var(--primary-yellow)">Master</span></div>
-        <nav>
-            <ul>
-                <li><a href="#rules">Rules</a></li>
-                <li><a href="#recommendations">B1 Tips</a></li>
-                <li><a href="#test">Test</a></li>
-            </ul>
-        </nav>
-        <a href="#" class="btn-cta">Start Learning</a>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Master the English B1 Level</h1>
-            <p>Learn grammar, vocabulary, and speaking patterns designed specifically for intermediate learners. Get ready to communicate confidently.</p>
-            <a href="#rules" class="btn-cta" style="background: var(--primary-red); color: white;">Explore Rules</a>
-        </div>
-    </section>
-
-    <!-- Rules Section (L1-L2) -->
-    <section id="rules">
-        <h2 class="section-title">English Grammar Rules</h2>
-        <p style="text-align:center; margin-bottom:40px;">The foundation of B1 is mastering the basics.</p>
+<div class="app-container">
+    
+    <!-- START SCREEN -->
+    <div id="start-screen" class="screen active">
+        <h1>EnglishPerfect</h1>
+        <p>Тренажер Present Perfect Tense</p>
+        <p>Уровень: <span id="user-level-display" style="color: var(--primary); font-weight: bold;">Выберите уровень</span></p>
         
-        <div class="rules-grid">
-            <!-- Rule 1 -->
-            <div class="rule-card">
-                <h3>The Present Simple</h3>
-                <p>Use <strong>Subject + Verb</strong>. For regular verbs, add -s only for he/she/it. (e.g., She <em>plays</em> soccer). For irregular verbs, memorize the forms.</p>
-            </div>
+        <input type="text" id="level-input" placeholder="Например: A1">
+        <br>
+        <button class="btn" onclick="startQuiz()">Начать тестирование</button>
+    </div>
 
-            <!-- Rule 2 -->
-            <div class="rule-card">
-                <h3>The Present Continuous</h3>
-                <p>Use <strong>am/is/are + verb-ing</strong>. It is used for actions happening now or temporary situations. (e.g., I <em>am reading</em> a book).</p>
-            </div>
-
-            <!-- Rule 3 -->
-            <div class="rule-card">
-                <h3>The Past Simple</h3>
-                <p>Use <strong>Subject + Verb-ed</strong>. It is used for completed actions in the past. (e.g., He <em>went</em> to the store yesterday).</p>
-            </div>
-
-            <!-- Rule 4 -->
-            <div class="rule-card">
-                <h3>The Future Simple</h3>
-                <p>Use <strong>Subject + will + verb</strong>. It is used for predictions, promises, or future plans. (e.g., I <em>will call</em> you).</p>
-            </div>
-
-            <!-- Rule 5 -->
-            <div class="rule-card">
-                <h3>Subject-Verb Agreement</h3>
-                <p>Ensure the verb matches the subject number. Singular (He) + singular verb, Plural (They) + plural verb.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- B1 Recommendations Section -->
-    <section id="recommendations" class="recommendations">
-        <h2 class="section-title">B1: Intermediate Strategies</h2>
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" class="screen">
+        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+        <h2 id="question-text">Вопрос...</h2>
         
-        <div class="rec-container">
-            <div class="rec-text">
-                <h2>Top Tips for Level B1</h2>
-                <p style="margin-bottom: 20px;">Level B1 is where you move from "understanding the main points" to "speaking with confidence". Here is how to improve:</p>
-                
-                <ul class="rec-list">
-                    <li>
-                        <span class="rec-icon">🗣️</span>
-                        <div><strong>Focus on Pronunciation.</strong> Don't just memorize words; learn the sounds (Phonics). Use apps like Duolingo or Anki to track your progress.</div>
-                    </li>
-                    <li>
-                        <span class="rec-icon">📚</span>
-                        <div><strong>Read "B2" level articles.</strong> Start with simple news sites (BBC Learning English) and gradually move to more complex topics like tech or politics.</div>
-                    </li>
-                    <li>
-                        <span class="rec-icon">💬</span>
-                        <div><strong>Speak daily.</strong> Talk to yourself in the mirror or record a 1-minute video about your day. Speaking is the best way to learn grammar rules.</div>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Visual decoration for B1 -->
-            <div style="flex: 1; background-color: #e0f7fa; height: 300px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #006064;">
-                <span style="font-size: 5rem;">🎓</span>
-            </div>
+        <div class="options-grid" id="options-container">
+            <!-- Options generated by JS -->
         </div>
-    </section>
+    </div>
 
-    <!-- Test Section -->
-    <section id="test" class="test-section">
-        <h2 class="section-title">B1 English Quiz</h2>
-        <p style="text-align:center; margin-bottom:30px;">Test your knowledge. Time: 15 minutes.</p>
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" class="screen">
+        <div class="score-circle" id="final-score">0%</div>
+        <h2>Тест завершен!</h2>
+        <p id="result-message"></p>
+        
+        <button class="btn btn-outline" onclick="restartQuiz()">Пройти заново</button>
+        <br><br>
+        <button class="btn" style="background-color: var(--secondary);" onclick="showStartScreen()">Назад к меню</button>
+    </div>
 
-        <div class="quiz-container">
-            <!-- Question 1 -->
-            <div class="question">
-                <p><strong>1. Choose the correct form of the verb in brackets.</strong></p>
-                <p>I usually _____ (go) to the gym on Mondays, but today I _____ (stay) at home.</p>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="a"> a. go / am going</label>
-                    <label><input type="radio" name="q1" value="b"> a. goes / is going</label>
-                    <label><input type="radio" name="q1" value="c"> b. go / will go</label>
-                </div>
-            </div>
+</div>
 
-            <!-- Question 2 -->
-            <div class="question">
-                <p><strong>2. Which sentence is grammatically correct?</strong></p>
-                <p>She _____ a book in her hand.</p>
-                <div class="options">
-                    <label><input type="radio" name="q2" value="a"> a. reads</label>
-                    <label><input type="radio" name="q2" value="b"> b. read</label>
-                    <label><input type="radio" name="q2" value="c"> c. reading</label>
-                </div>
-            </div>
+<script>
+    // --- DATA & LOGIC ---
+    
+    const levels = {
+        'A1': { level: 'Beginner', questions: [
+            "I haven't seen him for a long time. He is ___.", 
+            "She ___ to the store yesterday. She bought some milk.", 
+            "We ___ been to Paris before.", 
+            "He has lost his keys."
+        ]},
+        'A2': { level: 'Elementary', questions: [
+            "I ___ seen him since 2010.", 
+            "She ___ not finished her homework yet.", 
+            "They ___ been to London three times.", 
+            "He has a new car."
+        ]},
+        'B1': { level: 'Intermediate', questions: [
+            "I ___ been to Japan. I love the food there.", 
+            "She ___ not finished her report yet. It is 2 AM.", 
+            "We ___ been to the cinema last week.", 
+            "He has lost his passport."
+        ]},
+        'B2': { level: 'Advanced', questions: [
+            "I ___ been to Paris since 2015.", 
+            "She ___ not finished her thesis yet. She is in a meeting.", 
+            "They ___ been to the moon several times.", 
+            "He has lost his job."
+        ]},
+        'C1': { level: 'Professional', questions: [
+            "I ___ been to London since 2015.", 
+            "She ___ not finished her thesis yet. She is in a meeting.", 
+            "They ___ been to the moon several times.", 
+            "He has lost his job."
+        ]},
+        'C2': { level: 'Native', questions: [
+            "I ___ been to London since 2015.", 
+            "She ___ not finished her thesis yet. She is in a meeting.", 
+            "They ___ been to the moon several times.", 
+            "He has lost his job."
+        ]}
+    };
 
-            <!-- Question 3 -->
-            <div class="question">
-                <p><strong>3. Choose the correct future tense.</strong></p>
-                <p>I am going to visit my grandparents next week because they _____ (have) a birthday.</p>
-                <div class="options">
-                    <label><input type="radio" name="q3" value="a"> a. will have</label>
-                    <label><input type="radio" name="q3" value="b"> b. is having</label>
-                    <label><input type="radio" name="q3" value="c"> c. has had</label>
-                </div>
-            </div>
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let userLevel = 'A1';
 
-            <!-- Question 4 -->
-            <div class="question">
-                <p><strong>4. Which word is an adjective?</strong></p>
-                <p style="margin-bottom:10px;">A) Beautiful (Adj)</p>
-                <p style="margin-bottom:10px;">B) Go (Verb)</p>
-                <p style="margin-bottom:10px;">C) The (Article)</p>
-                <div class="options">
-                    <label><input type="radio" name="q4" value="a"> a. Beautiful</label>
-                    <label><input type="radio" name="q4" value="b"> b. Go</label>
-                    <label><input type="radio" name="q4" value="c"> c. The</label>
-                </div>
-            </div>
+    // --- NAVIGATION ---
 
-            <button class="btn-check" onclick="alert('Quiz completed! Check your score below.')">Check Answers</button>
-        </div>
-    </section>
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 EnglishB1Master. All rights reserved.</p>
-        <p style="font-size: 0.8rem; margin-top: 10px;">Designed for American Flag Theme</p>
-    </footer>
+    function startQuiz() {
+        const input = document.getElementById('level-input').value.trim();
+        if (!input) return alert("Пожалуйста, введите уровень!");
+
+        userLevel = input;
+        currentQuestions = levels[userLevel].questions;
+        currentIndex = 0;
+        score = 0;
+        
+        document.getElementById('user-level-display').innerText = userLevel;
+        showScreen('quiz-screen');
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentIndex >= currentQuestions.length) {
+            endQuiz();
+            return;
+        }
+
+        const qText = currentQuestions[currentIndex];
+        document.getElementById('question-text').innerText = qText;
+        
+        // Update progress bar
+        const progressPercent = ((currentIndex) / currentQuestions.length) * 100;
+        document.getElementById('progress').style.width = progressPercent + "%";
+
+        const optionsDiv = document.getElementById('options-container');
+        optionsDiv.innerHTML = '';
+
+        // Generate 4 random distractors (wrong answers)
+        let allOptions = [qText];
+        while(allOptions.length < 4) {
+            let randomQ = currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
+            if (!allOptions.includes(randomQ)) {
+                allOptions.push(randomQ);
+            }
+        }
+
+        // Shuffle options
+        allOptions.sort(() => Math.random() - 0.5);
+
+        allOptions.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(btn, opt === qText);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(btn, isCorrect) {
+        if (isCorrect) {
+            btn.classList.add('correct');
+            score++;
+        } else {
+            btn.classList.add('wrong');
+        }
+        
+        // Disable all buttons after click
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach(b => b.disabled = true);
+
+        setTimeout(() => {
+            currentIndex++;
+            loadQuestion();
+        }, 1500);
+    }
+
+    function endQuiz() {
+        showScreen('result-screen');
+        document.getElementById('final-score').innerText = Math.round((score / currentQuestions.length) * 100) + '%';
+        
+        let msg = "";
+        if (score === currentQuestions.length) msg = "Отлично! Вы настоящий эксперт в Present Perfect.";
+        else if (score > currentQuestions.length / 2) msg = "Хороший результат! У вас есть куда расти.";
+        else msg = "Неплохо, но нужно повторить тему.";
+        
+        document.getElementById('result-message').innerText = msg;
+    }
+
+    function restartQuiz() {
+        startQuiz();
+    }
+
+    function showStartScreen() {
+        showScreen('start-screen');
+    }
+
+</script>
 
 </body>
 </html>
