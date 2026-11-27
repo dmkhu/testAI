@@ -3,319 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вред курения: Факты и последствия</title>
+    <title>Лампочка</title>
     <style>
-        :root {
-            --primary-color: #e74c3c;
-            --secondary-color: #2c3e50;
-            --bg-color: #f4f6f7;
-            --text-color: #333;
-            --card-bg: #ffffff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+            font-family: Arial, sans-serif;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--secondary-color), #34495e);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+        .lamp-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        .bulb {
+            width: 60px;
+            height: 60px;
+            background-color: #333;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .bulb.on {
+            background-color: #fff;
+            box-shadow: 0 0 20px #fff, 0 0 40px #ffeb3b;
+            transform: scale(1.1);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 30px;
+            background-color: #555;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .intro {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 2rem;
+        .switch::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 28px;
+            height: 28px;
+            background-color: #fff;
+            border-radius: 50%;
             transition: transform 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        .switch.on {
+            background-color: #fff;
         }
 
-        .card h2 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 0.5rem;
-        }
-
-        .card ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        .card li {
-            margin-bottom: 0.8rem;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .card li::before {
-            content: "•";
-            color: var(--primary-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        .warning-box {
-            background-color: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .warning-box h3 {
-            color: #856404;
-            margin-bottom: 1rem;
-        }
-
-        footer {
-            background-color: var(--secondary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #c0392b;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
+        .switch.on::after {
+            transform: translateX(20px);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Вред курения</h1>
-        <p>Почему каждый сигарета — это шаг к болезни</p>
-    </header>
+<div class="lamp-container" id="lamp">
+    <div class="bulb" id="bulb"></div>
+    <div class="switch" id="switch"></div>
+</div>
 
-    <div class="container">
-        <div class="intro">
-            <p>Курение — это не просто привычка, а серьезная угроза для здоровья. Оно наносит непоправимый ущерб вашему организму, включая сердце, легкие и мозг.</p>
-        </div>
+<script>
+    const bulb = document.getElementById('bulb');
+    const switchBtn = document.getElementById('switch');
+    let isOn = false;
 
-        <div class="grid">
-            <!-- Карточка 1 -->
-            <div class="card">
-                <h2>Сердце и сосуды</h2>
-                <p>Курение вызывает хроническое воспаление в сосудах, что приводит к сужению артерий. Это увеличивает риск развития:</p>
-                <ul>
-                    <li>Ишемической болезни сердца</li>
-                    <li>Инфаркта миокарда</li>
-                    <li>Аритмий</li>
-                    <li>Синдрома обструктивного бронхита</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 2 -->
-            <div class="card">
-                <h2>Легкие и легкие</h2>
-                <p>Дым содержит более 7000 химических веществ, из которых многие являются канцерогенами. Курение ускоряет старение клеток и разрушает структуру легких:</p>
-                <ul>
-                    <li>Хронический бронхит</li>
-                    <li>Кураторная эмфизема</li>
-                    <li>Рак легкого (включая рак пищевода)</li>
-                    <li>Пневмосклероз</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 3 -->
-            <div class="card">
-                <h2>Нервная система</h2>
-                <p>Дым проникает в кровь и мозг, вызывая токсическое воздействие. Это приводит к:</p>
-                <ul>
-                    <li>Повышенному риску инсульта (свертывания крови)</li>
-                    <li>Нарушению памяти</li>
-                    <li>Ухудшению концентрации внимания</li>
-                    <li>Снижению уровня тестостерона и повышению эстрогена</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 4 -->
-            <div class="card">
-                <h2>Дыхательные пути</h2>
-                <p>Курение вызывает постоянную сухость в горле, кашель и хрипы. Это создает среду для развития:</p>
-                <ul>
-                    <li>Хронического обструктивного заболевания легких (ХОБЛ)</li>
-                    <li>Аsthma</li>
-                    <li>Пневмонии</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 5 -->
-            <div class="card">
-                <h2>Рак и онкология</h2>
-                <p>Дым содержит канцерогены, которые повреждают ДНК клеток. Курение является одним из главных факторов риска развития:</p>
-                <ul>
-                    <li>Рак легких</li>
-                    <li>Рак пищевода</li>
-                    <li>Рак ротовой полости и горла</li>
-                    <li>Рак желудка</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 6 -->
-            <div class="card">
-                <h2>Психологические эффекты</h2>
-                <p>Курение вызывает привыкание, зависимость и психическое напряжение. Это приводит к:</p>
-                <ul>
-                    <li>Тревожности и депрессии</li>
-                    <li>Снижению самооценки</li>
-                    <li>Социальной изоляции</li>
-                    <li>Потере трудоспособности</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 7 -->
-            <div class="card">
-                <h2>Экология и окружающая среда</h2>
-                <p>Каждая сигарета выбрасывает в атмосферу:</p>
-                <ul>
-                    <li>Тысячи частиц дыма (PM2.5)</li>
-                    <li>Пепел, который загрязняет почву и воду</li>
-                    <li>Углекислый газ, вызывающий глобальное потепление</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 8 -->
-            <div class="card">
-                <h2>Экономическая стоимость</h2>
-                <p>Последствия курения стоят человечеству огромных денег:</p>
-                <ul>
-                    <li>Расходы на лечение (лечение, операции, лекарства)</li>
-                    <li>Снижение производительности труда</li>
-                    <li>Потеря рабочих мест</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 9 -->
-            <div class="card">
-                <h2>Дети и будущие поколения</h2>
-                <p>Вред курения не ограничивается взрослыми. Дым матери проникает через плаценту, а дым детей в помещении вреден для их развития:</p>
-                <ul>
-                    <li>Риск врожденных пороков сердца</li>
-                    <li>Снижение IQ и когнитивных способностей</li>
-                    <li>Риск развития рака у потомства</li>
-                </ul>
-            </div>
-
-            <!-- Карточка 10 -->
-            <div class="card">
-                <h2>Канцерогены</h2>
-                <p>Дым содержит более 7,000 химических веществ. Из них более 65 являются канцерогенами, включая:</p>
-                <ul>
-                    <li>Никотин (вызывает зависимость)</li>
-                    <li>Тяжелые металлы</li>
-                    <li>Ароматические амины</li>
-                    <li>Пестициды и пестицид-подобные соединения</li>
-                </ul>
-            </div>
-
-        </div>
-
-        <div class="warning-box">
-            <h3>Важное предупреждение</h3>
-            <p>Никотин — это вещество, которое вызывает привыкание. Оно разрушает клетки организма и делает его уязвимым для других токсинов. Если вы курите, вам необходимо немедленно прекратить это действие.</p>
-        </div>
-
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="#" class="btn">Скачать памятку "Никотин — это смерть"</a>
-        </div>
-    </div>
-
-    <footer>
-        <p>&copy; 2023. Информационный сайт о вреде курения.</p>
-        <p style="font-size: 0.8rem; opacity: 0.7;">Информация носит ознакомительный характер и не заменяет консультацию врача.</p>
-    </footer>
-
-    <script>
-        // Простой скрипт для анимации появления элементов при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.card');
-            
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-
-            // Плавный скролл по якорным ссылкам
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-        });
-    </script>
+    switchBtn.addEventListener('click', () => {
+        if (isOn) {
+            bulb.classList.remove('on');
+            switchBtn.classList.remove('on');
+            isOn = false;
+        } else {
+            bulb.classList.add('on');
+            switchBtn.classList.add('on');
+            isOn = true;
+        }
+    });
+</script>
 
 </body>
 </html>
