@@ -2,282 +2,161 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Базы: 10 Основ</title>
+    <title>Змейка JS</title>
     <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-radius: 12px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background-color: #202124;
+            color: #fff;
+            font-family: sans-serif;
             display: flex;
             flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            background-color: #eff6ff;
-            border-radius: 8px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-right: 1rem;
-            color: var(--primary-color);
+            height: 100vh;
+            margin: 0;
         }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-main);
+        canvas {
+            border: 2px solid #fff;
+            background-color: #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-
-        .card-desc {
-            flex-grow: 1;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .code-block {
-            background-color: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 6px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.85rem;
-            margin-top: auto;
-            position: relative;
-        }
-
-        .code-block::before {
-            content: "SQL";
-            position: absolute;
-            top: -12px;
-            left: 10px;
-            background-color: var(--bg-color);
-            padding: 0 8px;
-            font-weight: bold;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .card { padding: 1.5rem; }
+        .score {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>SQL Базы: Основы</h1>
-        <p class="subtitle">10 самых важных и простых запросов для старта</p>
-    </header>
-
-    <div class="grid">
-        <!-- 1. SELECT -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">🔍</div>
-                <h3 class="card-title">SELECT</h3>
-            </div>
-            <p class="card-desc">Выбирает данные из таблицы. Это самый базовый запрос, который позволяет получить информацию.</p>
-            <div class="code-block">
-SELECT * FROM users;
-            </div>
-        </article>
-
-        <!-- 2. FROM -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">📂</div>
-                <h3 class="card-title">FROM</h3>
-            </div>
-            <p class="card-desc">Определяет, откуда будут взяты данные. Обычно используется с SELECT для указания таблицы.</p>
-            <div class="code-block">
-SELECT * FROM users;
-            </div>
-        </article>
-
-        <!-- 3. WHERE -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">🎯</div>
-                <h3 class="card-title">WHERE</h3>
-            </div>
-            <p class="card-desc">Фильтрует строки. Позволяет выбрать только те записи, которые соответствуют условию.</p>
-            <div class="code-block">
-SELECT * FROM users WHERE age > 18;
-            </div>
-        </article>
-
-        <!-- 4. ORDER BY -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">📊</div>
-                <h3 class="card-title">ORDER BY</h3>
-            </div>
-            <p class="card-desc">Сортирует результаты. Позволяет отсортировать строки по возрастанию или убыванию.</p>
-            <div class="code-block">
-SELECT * FROM users ORDER BY age DESC;
-            </div>
-        </article>
-
-        <!-- 5. LIMIT -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">🔒</div>
-                <h3 class="card-title">LIMIT</h3>
-            </div>
-            <p class="card-desc">Ограничивает количество возвращаемых строк. Используется для получения первых N элементов.</p>
-            <div class="code-block">
-SELECT * FROM users LIMIT 10;
-            </div>
-        </article>
-
-        <!-- 6. JOIN -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">🔗</div>
-                <h3 class="card-title">JOIN</h3>
-            </div>
-            <p class="card-desc">Соединяет таблицы на основе общих колонок. Позволяет получить данные из нескольких таблиц.</p>
-            <div class="code-block">
-SELECT * FROM users JOIN orders ON users.id = orders.user_id;
-            </div>
-        </article>
-
-        <!-- 7. GROUP BY -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">📁</div>
-                <h3 class="card-title">GROUP BY</h3>
-            </div>
-            <p class="card-desc">Группирует строки по определенным колонкам. Часто используется с COUNT и SUM.</p>
-            <div class="code-block">
-SELECT department, COUNT(*) FROM employees GROUP BY department;
-            </div>
-        </article>
-
-        <!-- 8. HAVING -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">📋</div>
-                <h3 class="card-title">HAVING</h3>
-            </div>
-            <p class="card-desc">Фильтрует группы. Используется после GROUP BY, так как работает с группами, а не со строками.</p>
-            <div class="code-block">
-SELECT department FROM employees GROUP BY department HAVING COUNT(*) > 5;
-            </div>
-        </article>
-
-        <!-- 9. DISTINCT -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">🧩</div>
-                <h3 class="card-title">DISTINCT</h3>
-            </div>
-            <p class="card-desc">Уникализует значения. Возвращает только разные значения из выборки.</p>
-            <div class="code-block">
-SELECT DISTINCT department FROM employees;
-            </div>
-        </article>
-
-        <!-- 10. INSERT -->
-        <article class="card">
-            <div class="card-header">
-                <div class="icon-box">➕</div>
-                <h3 class="card-title">INSERT</h3>
-            </div>
-            <p class="card-desc">Добавляет новую запись в таблицу. Создает строку с указанными значениями.</p>
-            <div class="code-block">
-INSERT INTO users (name, email) VALUES ('Иван', 'ivan@example.com');
-            </div>
-        </article>
-
-    </div>
-</div>
+<div class="score">Счет: <span id="scoreVal">0</span></div>
+<canvas id="gameCanvas" width="400" height="400"></canvas>
 
 <script>
-    // Небольшой скрипт для анимации появления карточек при загрузке
-    document.addEventListener('DOMContentLoaded', () => {
-        const cards = document.querySelectorAll('.card');
-        
-        cards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = `all 0.5s ease ${index * 0.1}s`;
-            
-            setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 50 + (index * 100));
-        });
-    });
-</script>
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("scoreVal");
 
+const gridSize = 20;
+const tileCount = canvas.width / gridSize;
+let score = 0;
+
+let velocityX = 0;
+let velocityY = 0;
+let snake = [];
+let apple = { x: 5, y: 5 };
+let gameInterval;
+
+function initGame() {
+    snake = [
+        { x: 10, y: 10 },
+        { x: 9, y: 10 },
+        { x: 8, y: 10 }
+    ];
+    velocityX = 1;
+    velocityY = 0;
+    score = 0;
+    scoreEl.innerText = score;
+    placeApple();
+}
+
+function placeApple() {
+    apple.x = Math.floor(Math.random() * tileCount);
+    apple.y = Math.floor(Math.random() * tileCount);
+    
+    // Проверка, чтобы яблоко не появилось внутри змейки
+    for (let part of snake) {
+        if (part.x === apple.x && part.y === apple.y) {
+            placeApple();
+        }
+    }
+}
+
+function draw() {
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Рисуем змейку
+    for (let i = 0; i < snake.length; i++) {
+        if (i === 0) ctx.fillStyle = "#4caf50"; // Голова ярче
+        else ctx.fillStyle = "#81c784"; // Тело светлее
+        ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize - 2, gridSize - 2);
+    }
+
+    // Рисуем яблоко
+    ctx.fillStyle = "#ff5252";
+    ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize - 2, gridSize - 2);
+
+    // Логика движения
+    const head = { x: snake[0].x + velocityX, y: snake[0].y + velocityY };
+
+    // Проверка столкновений со стенами
+    if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+        clearInterval(gameInterval);
+        return;
+    }
+
+    // Проверка столкновений с хвостом
+    for (let i = 1; i < snake.length; i++) {
+        if (head.x === snake[i].x && head.y === snake[i].y) {
+            clearInterval(gameInterval);
+            return;
+        }
+    }
+
+    snake.unshift(head);
+
+    // Проверка еды
+    if (head.x === apple.x && head.y === apple.y) {
+        score++;
+        scoreEl.innerText = score;
+        placeApple();
+    } else {
+        snake.pop();
+    }
+
+    // Очистка экрана
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function gameLoop() {
+    draw();
+    if (velocityX !== 0 || velocityY !== 0) {
+        setTimeout(() => {
+            initGame();
+            gameInterval = setInterval(gameLoop, 1000 / 15); // Скорость игры
+        }, 10);
+    }
+}
+
+document.addEventListener("keydown", keyDownEvent);
+function keyDownEvent(e) {
+    switch (e.keyCode) {
+        case 37: // Влево
+            if (velocityX === 1) return;
+            velocityX = -1;
+            velocityY = 0;
+            break;
+        case 38: // Вверх
+            if (velocityY === 1) return;
+            velocityX = 0;
+            velocityY = -1;
+            break;
+        case 39: // Вправо
+            if (velocityX === -1) return;
+            velocityX = 1;
+            velocityY = 0;
+            break;
+        case 40: // Вниз
+            if (velocityY === -1) return;
+            velocityX = 0;
+            velocityY = 1;
+            break;
+    }
+}
+
+initGame();
+gameLoop();
+
+</script>
 </body>
 </html>
