@@ -3,298 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Природа Камчатки | Экологический проект</title>
+    <title>Космос</title>
     <style>
-        :root {
-            --primary-color: #2c5e2e;
-            --secondary-color: #d4a373;
-            --accent-color: #8fbc8f;
-            --text-color: #333;
-            --bg-color: #f9fdf9;
-        }
-
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
         }
 
         header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        nav {
+            width: 100%;
+            padding: 20px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 24px;
             font-weight: bold;
+            color: #00d2ff;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
         nav a {
-            color: white;
+            color: #fff;
             text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.3s;
+            margin-left: 30px;
+            font-size: 16px;
+            transition: color 0.3s;
         }
 
         nav a:hover {
-            opacity: 0.8;
+            color: #00d2ff;
         }
 
         .hero {
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1795279180946-ce64b3e6d149?q=80&w=1335&auto=format&fit=crop');
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
             background-size: cover;
             background-position: center;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), #000);
         }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+        .hero-content {
+            z-index: 1;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.7);
+        }
+
+        p {
+            font-size: 24px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #e0e0e0;
         }
 
         .btn {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 10px 30px;
-            border-radius: 5px;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid #00d2ff;
+            color: #00d2ff;
+            font-size: 18px;
+            cursor: pointer;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            border-radius: 50px;
         }
 
         .btn:hover {
-            background-color: var(--primary-color);
+            background: #00d2ff;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
         }
 
-        .section {
-            padding: 4rem 0;
-        }
-
-        .about {
-            text-align: center;
-        }
-
-        .about h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .gallery {
-            background-color: #e8f5e9;
-        }
-
-        .gallery h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            height: 250px;
-        }
-
-        .gallery-item img {
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #00d2ff;
+            z-index: 10;
+        }
+
+        .info-panel h3 {
+            margin-top: 0;
+            color: #00d2ff;
         }
 
         footer {
-            background-color: var(--primary-color);
-            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
             text-align: center;
-            padding: 2rem 0;
-            margin-top: auto;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            font-size: 14px;
+            color: #aaa;
         }
 
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            
-            nav ul {
-                display: none;
-            }
+            h1 { font-size: 36px; }
+            p { font-size: 18px; }
+            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
+            .info-panel { position: relative; right: 0; bottom: 0; width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Камчатский Эко-Драйв</div>
-                <ul>
-                    <li><a href="#home">Главная</a></li>
-                    <li><a href="#about">О проекте</a></li>
-                    <li><a href="#gallery">Галерея</a></li>
-                    <li><a href="#contact">Контакты</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<header>
+    <div class="logo">Cosmos</div>
+    <nav>
+        <a href="#">Главная</a>
+        <a href="#">О планетах</a>
+        <a href="#">Галактики</a>
+    </nav>
+</header>
 
-    <section id="home" class="hero">
-        <div class="container hero-content">
-            <h1>Добро пожаловать на Камчатку</h1>
-            <p>Защитите уникальную природу, где горы, океан и тайга встречаются в гармонии.</p>
-            <a href="#about" class="btn">Узнать больше</a>
-        </div>
-    </section>
+<div class="stars" id="starContainer"></div>
 
-    <section id="about" class="section about">
-        <div class="container">
-            <h2>Почему Камчатка?</h2>
-            <p>Это не просто горная страна. Это место, где природа демонстрирует невероятную устойчивость и красоту. Здесь находится самая высокая точка мира — вулкан Ключевская Сопка.</p>
-            
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon">🏔️</div>
-                    <h3>Горы</h3>
-                    <p>Уникальные ландшафты, вулканы и ледники, которые формируют саму Землю.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌊</div>
-                    <h3>Океан</h3>
-                    <p>Тихий океан с богатейшими морскими ресурсами и редкими видами рыб.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌲</div>
-                    <h3>Тайга</h3>
-                    <p>Самая густая лесная зона в мире, где растут редкие виды деревьев.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Величие Вселенной</h1>
+        <p>Отгляните назад в бесконечность и посмотрите на звезды, которые веками светят вам навстречу. Это не просто картинки — это реальность.</p>
+        <a href="#" class="btn">Узнать больше</a>
+    </div>
 
-    <section id="gallery" class="section gallery">
-        <div class="container">
-            <h2>Галерея природы</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1596403782267-e2c7a91b7e23?q=80&w=1335&auto=format&fit=crop" alt="Горы Камчатки">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1335&auto=format&fit=crop" alt="Лес Камчатки">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1474487539236-34202123bfa5?q=80&w=1335&auto=format&fit=crop" alt="Океан Камчатки">
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="info-panel">
+        <h3>Космос</h3>
+        <p>Место, где находится Вселенная. Это бесконечное пространство, заполненное материей и пустотой.</p>
+    </div>
+</section>
 
-    <footer id="contact">
-        <div class="container">
-            <p>&copy; 2023 Проект поддержки природы Камчатки. Все права защищены.</p>
-            <p style="font-size: 0.9rem; margin-top: 10px;">Создано с любовью к природе</p>
-        </div>
-    </footer>
+<footer>
+    &copy; 2023 Космический Проект | Создано с любовью к звездам
+</footer>
 
-    <script>
-        // Плавная прокрутка для якорных ссылок
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+<script>
+    // Генерация звездного неба
+    const container = document.getElementById('starContainer');
+    const starCount = 150;
+
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // Случайная позиция
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        // Случайный размер
+        const size = Math.random() * 2 + 1;
+        
+        // Случайная анимация (интервал)
+        const duration = Math.random() * 3 + 2;
+        
+        star.style.left = x + '%';
+        star.style.top = y + '%';
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.animationDuration = duration + 's';
+        
+        container.appendChild(star);
+    }
+
+    // Эффект параллакса при скролле (простая имитация)
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const stars = document.querySelectorAll('.star');
+        
+        if(scrolled > 50) {
+            stars.forEach(star => {
+                const x = Math.random() * 100 - 50;
+                const y = Math.random() * 100 - 50;
+                star.style.transform = `translate(${x}px, ${y}px)`;
             });
-        });
+        } else {
+            stars.forEach(star => {
+                star.style.transform = 'none';
+            });
+        }
+    });
+</script>
 
-        // Простой эффект при наведении на карточки
-        const cards = document.querySelectorAll('.feature-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
 </body>
 </html>
