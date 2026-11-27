@@ -3,244 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Космос</title>
+    <title>Базовые SQL запросы</title>
     <style>
-        body {
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00d2ff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #00d2ff;
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             text-align: center;
-            position: relative;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), #000);
-        }
-
-        .hero-content {
-            z-index: 1;
-            padding: 20px;
-            max-width: 800px;
+            margin-bottom: 3rem;
         }
 
         h1 {
-            font-size: 60px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.7);
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
         }
 
-        p {
-            font-size: 24px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: #e0e0e0;
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
         }
 
-        .btn {
-            padding: 15px 40px;
-            background: transparent;
-            border: 2px solid #00d2ff;
-            color: #00d2ff;
-            font-size: 18px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border-radius: 50px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
         }
 
-        .btn:hover {
-            background: #00d2ff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 5px solid var(--primary-color);
         }
 
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle infinite ease-in-out;
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+        .syntax-highlight {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--primary-color);
         }
 
-        .info-panel {
-            position: absolute;
-            bottom: 50px;
-            right: 50px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #00d2ff;
-            z-index: 10;
+        .description {
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: justify;
         }
 
-        .info-panel h3 {
-            margin-top: 0;
-            color: #00d2ff;
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+        }
+
+        .code-block pre {
+            margin: 0;
         }
 
         footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            padding: 20px;
             text-align: center;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 36px; }
-            p { font-size: 18px; }
-            header { padding: 15px 20px; flex-direction: column; gap: 10px; }
-            .info-panel { position: relative; right: 0; bottom: 0; width: 100%; text-align: center; }
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>SQL Базовые Запросы</h1>
+            <p class="subtitle">10 самых важных и простых запросов для начинающих</p>
+        </header>
 
-<header>
-    <div class="logo">Cosmos</div>
-    <nav>
-        <a href="#">Главная</a>
-        <a href="#">О планетах</a>
-        <a href="#">Галактики</a>
-    </nav>
-</header>
+        <div class="grid">
+            <!-- 1. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> * FROM table_name;</h2>
+                <div class="description">
+                    Самый простой запрос. Возвращает все колонки и значения из выбранной таблицы.
+                    <br><br>
+                    <code class="code-block">SELECT * FROM users;</code>
+                </div>
+            </article>
 
-<div class="stars" id="starContainer"></div>
+            <!-- 2. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name FROM table_name;</h2>
+                <div class="description">
+                    Вызывает только конкретную колонку из таблицы, игнорируя все остальные поля.
+                    <br><br>
+                    <code class="code-block">SELECT name FROM users;</code>
+                </div>
+            </article>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Величие Вселенной</h1>
-        <p>Отгляните назад в бесконечность и посмотрите на звезды, которые веками светят вам навстречу. Это не просто картинки — это реальность.</p>
-        <a href="#" class="btn">Узнать больше</a>
+            <!-- 3. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name;</h2>
+                <div class="description">
+                    Вызывает несколько колонок из одной таблицы одновременно.
+                    <br><br>
+                    <code class="code-block">SELECT name, age FROM users;</code>
+                </div>
+            </article>
+
+            <!-- 4. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name WHERE condition;</h2>
+                <div class="description">
+                    Фильтрует строки в таблице. Условие (WHERE) должно быть выражением сравнения.
+                    <br><br>
+                    <code class="code-block">SELECT name FROM users WHERE age > 18;</code>
+                </div>
+            </article>
+
+            <!-- 5. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name GROUP BY group_column;</h2>
+                <div class="description">
+                    Группирует строки по определенным колонкам и возвращает статистику для каждой группы.
+                    <br><br>
+                    <code class="code-block">SELECT department, COUNT(*) FROM employees GROUP BY department;</code>
+                </div>
+            </article>
+
+            <!-- 6. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name ORDER BY sort_column;</h2>
+                <div class="description">
+                    Отсортирует строки в таблице по указанному столбцу. По умолчанию сортировка идет по возрастанию.
+                    <br><br>
+                    <code class="code-block">SELECT name FROM users ORDER BY age DESC;</code>
+                </div>
+            </article>
+
+            <!-- 7. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name LIMIT n;</h2>
+                <div class="description">
+                    Возвращает только первые n строк из таблицы. Используется для ограничения количества данных.
+                    <br><br>
+                    <code class="code-block">SELECT name FROM users LIMIT 10;</code>
+                </div>
+            </article>
+
+            <!-- 8. SELECT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">SELECT</span> column_name1, column_name2 ... FROM table_name HAVING condition;</h2>
+                <div class="description">
+                    Фильтрует строки после группировки (только для SELECT). Используется вместо WHERE для сложных условий.
+                    <br><br>
+                    <code class="code-block">SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5;</code>
+                </div>
+            </article>
+
+            <!-- 9. INSERT -->
+            <article class="card">
+                <h2><span class="syntax-highlight">INSERT INTO</span> table_name (column1, column2) VALUES (value1, value2);</h2>
+                <div class="description">
+                    Добавляет новую строку в таблицу. Если колонка уже существует, значение автоматически заполняется.
+                    <br><br>
+                    <code class="code-block">INSERT INTO users (name, email) VALUES ('Иван', 'ivan@example.com');</code>
+                </div>
+            </article>
+
+            <!-- 10. UPDATE -->
+            <article class="card">
+                <h2><span class="syntax-highlight">UPDATE</span> table_name SET column_name = value WHERE condition;</h2>
+                <div class="description">
+                    Изменяет значения в существующих строках таблицы. Условие (WHERE) определяет, на какую строку применить изменения.
+                    <br><br>
+                    <code class="code-block">UPDATE users SET age = 25 WHERE name = 'Иван';</code>
+                </div>
+            </article>
+        </div>
+
+        <footer>
+            Создано для обучения SQL
+        </footer>
     </div>
-
-    <div class="info-panel">
-        <h3>Космос</h3>
-        <p>Место, где находится Вселенная. Это бесконечное пространство, заполненное материей и пустотой.</p>
-    </div>
-</section>
-
-<footer>
-    &copy; 2023 Космический Проект | Создано с любовью к звездам
-</footer>
-
-<script>
-    // Генерация звездного неба
-    const container = document.getElementById('starContainer');
-    const starCount = 150;
-
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        
-        // Случайная позиция
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        
-        // Случайный размер
-        const size = Math.random() * 2 + 1;
-        
-        // Случайная анимация (интервал)
-        const duration = Math.random() * 3 + 2;
-        
-        star.style.left = x + '%';
-        star.style.top = y + '%';
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        star.style.animationDuration = duration + 's';
-        
-        container.appendChild(star);
-    }
-
-    // Эффект параллакса при скролле (простая имитация)
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const stars = document.querySelectorAll('.star');
-        
-        if(scrolled > 50) {
-            stars.forEach(star => {
-                const x = Math.random() * 100 - 50;
-                const y = Math.random() * 100 - 50;
-                star.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        } else {
-            stars.forEach(star => {
-                star.style.transform = 'none';
-            });
-        }
-    });
-</script>
-
 </body>
 </html>
