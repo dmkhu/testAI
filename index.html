@@ -3,175 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин планов на забег</title>
+    <title>Гречка: Золотая Звезда</title>
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
+        :root {
+            --primary-color: #f4a261;
+            --secondary-color: #e76f51;
+            --bg-color: #fff8e1;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        * {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            border: 2px solid #0f0;
-            background-color: #000;
-            box-shadow: 0 0 15px #0f0, inset 0 0 15px #0f0;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 5px #0f0;
-        }
-
-        .product-card {
-            background-color: #000;
-            border: 1px solid #0f0;
-            margin-bottom: 20px;
-            padding: 15px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .product-card:hover {
-            background-color: #001100;
-            box-shadow: 0 0 20px #0f0, inset 0 0 10px #0f0;
-            transform: scale(1.02);
-        }
-
-        .product-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .product-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0f0;
-            text-shadow: 0 0 5px #0f0;
-            margin-bottom: 15px;
-        }
-
-        .btn-buy {
-            background-color: transparent;
-            border: 2px solid #0f0;
-            color: #0f0;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .btn-buy:hover {
-            background-color: #0f0;
-            color: #000;
-            box-shadow: 0 0 15px #0f0, inset 0 0 10px #0f0;
-        }
-
-        .payment-instruction {
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px dashed #0f0;
-            background-color: #050505;
-            font-size: 14px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
         }
 
-        .payment-instruction h3 {
-            color: #0f0;
-            margin-top: 0;
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .telegram-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: #0f0;
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 1rem;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: var(--secondary-color);
             text-decoration: none;
             font-weight: bold;
-            border-bottom: 1px solid #0f0;
+            transition: color 0.3s;
         }
 
-        .telegram-link:hover {
-            background-color: #0f0;
-            color: #000;
+        nav a:hover {
+            color: #d84315;
         }
 
-        @media (max-width: 480px) {
-            .container {
-                border-width: 1px;
-            }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #e76f51;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-top: 2rem;
+            background-color: #fff8e1;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .stat-item h4 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .stats { flex-direction: column; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Магазин Планов</h1>
+<header>
+    <h1>Гречка: Золотая Звезда</h1>
+    <p>История, польза и рецепты</p>
+</header>
 
-    <div class="product-card">
-        <div class="product-title">План на 5 км</div>
-        <div class="product-price">100 ₽</div>
-        <button class="btn-buy" onclick="showInstruction()">Купить</button>
-    </div>
+<nav>
+    <ul>
+        <li><a href="#about">О гречке</a></li>
+        <li><a href="#benefits">Здоровье</a></li>
+        <li><a href="#recipes">Рецепты</a></li>
+        <li><a href="#history">История</a></li>
+    </ul>
+</nav>
 
-    <div class="product-card">
-        <div class="product-title">План на 10 км</div>
-        <div class="product-price">100 ₽</div>
-        <button class="btn-buy" onclick="showInstruction()">Купить</button>
-    </div>
+<main>
+    <section id="about" class="hero">
+        <h2>Гречка — это не просто еда, это здоровье</h2>
+        <p>Одна из самых древних и полезных зерновых культур. Гречневая крупа содержит больше витаминов группы B, чем рис или пшеница.</p>
+        <a href="#recipes" class="btn">Смотреть рецепты</a>
+    </section>
 
-    <div class="product-card">
-        <div class="product-title">План на 21.1 км</div>
-        <div class="product-price">100 ₽</div>
-        <button class="btn-buy" onclick="showInstruction()">Купить</button>
-    </div>
+    <section id="benefits">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Почему гречка — суперфуд?</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🥑 Богатый источник витаминов</h3>
+                <p>Гречка содержит более 10 витаминов группы B, включая витамин B6, который помогает мозгу и нервной системе.</p>
+            </div>
+            <div class="card">
+                <h3>💪 Улучшает пищеварение</h3>
+                <p>Содержит клетчатку, которая работает как природный слабительное, помогая поддерживать здоровую работу кишечника.</p>
+            </div>
+            <div class="card">
+                <h3>🧠 Помогает мозгу</h3>
+                <p>Витамины группы B необходимы для производства энергии в клетках мозга и улучшения когнитивных функций.</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="product-card">
-        <div class="product-title">План на Марафон</div>
-        <div class="product-price">100 ₽</div>
-        <button class="btn-buy" onclick="showInstruction()">Купить</button>
-    </div>
+    <section id="recipes">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Вкусные рецепты</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🍲 Классический суп "Гречка"</h3>
+                <p>Нежный бульон с рассыпчатой гречкой, зеленью и кусочками мяса. Идеально для семейного ужина.</p>
+                <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Сделать</a>
+            </div>
+            <div class="card">
+                <h3>🥣 Гречневая каша с яйцом</h3>
+                <p>Быстрая и питательная овсянка, сваренная на воде или молоке. Добавляем яйцо для белка.</p>
+                <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Сделать</a>
+            </div>
+            <div class="card">
+                <h3>🥗 Гречневая паста с овощами</h3>
+                <p>Гречка, тушеные овощи и томатная паста. Легкий обед для тех, кто следит за весом.</p>
+                <a href="#" class="btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Сделать</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="payment-instruction">
-        <h3>Инструкция по оплате:</h3>
-        <p>Для подтверждения оплаты переведите 100 рублей на номер телефона: <strong>89998702155</strong>.</p>
-        <p>После перевода свяжитесь с нами в Telegram для получения плана.</p>
-        <a href="https://t.me/dmkhu" class="telegram-link">Написать в Telegram @dmkhu</a>
-    </div>
-</div>
+    <section id="history">
+        <h2 style="text-align: center; margin-bottom: 2rem;">История гречки</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+            Гречка была известна еще в Древней Греции и Египте. Название происходит от слова "грек" (греческий). 
+            В древности её называли «Золотая Звезда» из-за золотистого цвета зерен. 
+            Она была основным продуктом питания для многих народов, включая римлян и персов.
+        </p>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2023 Сайт про гречку. Сделано с любовью к зерну.</p>
+</footer>
 
 <script>
-    function showInstruction() {
-        const instruction = document.querySelector('.payment-instruction');
-        instruction.style.display = 'block';
-        
-        // Анимация появления
-        instruction.animate([
-            { opacity: 0, transform: 'translateY(10px)' },
-            { opacity: 1, transform: 'translateY(0)' }
-        ], { duration: 300 });
-
-        // Скрываем кнопку покупки после нажатия (опционально)
-        const buttons = document.querySelectorAll('.btn-buy');
-        buttons.forEach(btn => {
-            btn.style.display = 'none';
+    document.addEventListener('DOMContentLoaded', () => {
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
-    }
+
+        // Простая анимация появления карточек при скролле
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    });
 </script>
 
 </body>
