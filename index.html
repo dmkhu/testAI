@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Магазин Планов на забег</title>
+    <title>Магазин планов на забег</title>
     <style>
         body {
             background-color: #000;
@@ -22,23 +22,157 @@
             max-width: 400px;
             padding: 20px;
             border: 2px solid #0f0;
-            box-shadow: 0 0 15px #0f0, inset 0 0 15px #0f0;
             background-color: #000;
+            box-shadow: 0 0 15px #0f0, inset 0 0 15px #0f0;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
             font-size: 24px;
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #0f0;
             text-shadow: 0 0 5px #0f0;
         }
 
-        .product {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
+        .product-card {
+            background-color: #000;
+            border: 1px solid #0f0;
             margin-bottom: 20px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            background-color: #001100;
+            box-shadow: 0 0 20px #0f0, inset 0 0 10px #0f0;
+            transform: scale(1.02);
+        }
+
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            background-color: transparent;
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-buy:hover {
+            background-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0, inset 0 0 10px #0f0;
+        }
+
+        .payment-instruction {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px dashed #0f0;
+            background-color: #050505;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .payment-instruction h3 {
+            color: #0f0;
+            margin-top: 0;
+        }
+
+        .telegram-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0f0;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 1px solid #0f0;
+        }
+
+        .telegram-link:hover {
+            background-color: #0f0;
+            color: #000;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                border-width: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Магазин Планов</h1>
+
+    <div class="product-card">
+        <div class="product-title">План на 5 км</div>
+        <div class="product-price">100 ₽</div>
+        <button class="btn-buy" onclick="showInstruction()">Купить</button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-title">План на 10 км</div>
+        <div class="product-price">100 ₽</div>
+        <button class="btn-buy" onclick="showInstruction()">Купить</button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-title">План на 21.1 км</div>
+        <div class="product-price">100 ₽</div>
+        <button class="btn-buy" onclick="showInstruction()">Купить</button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-title">План на Марафон</div>
+        <div class="product-price">100 ₽</div>
+        <button class="btn-buy" onclick="showInstruction()">Купить</button>
+    </div>
+
+    <div class="payment-instruction">
+        <h3>Инструкция по оплате:</h3>
+        <p>Для подтверждения оплаты переведите 100 рублей на номер телефона: <strong>89998702155</strong>.</p>
+        <p>После перевода свяжитесь с нами в Telegram для получения плана.</p>
+        <a href="https://t.me/dmkhu" class="telegram-link">Написать в Telegram @dmkhu</a>
+    </div>
+</div>
+
+<script>
+    function showInstruction() {
+        const instruction = document.querySelector('.payment-instruction');
+        instruction.style.display = 'block';
+        
+        // Анимация появления
+        instruction.animate([
+            { opacity: 0, transform: 'translateY(10px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], { duration: 300 });
+
+        // Скрываем кнопку покупки после нажатия (опционально)
+        const buttons = document.querySelectorAll('.btn-buy');
+        buttons.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+</script>
+
+</body>
+</html>
