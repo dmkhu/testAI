@@ -3,96 +3,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лампочка</title>
+    <title>Рецепты Курицы - Быстро и вкусно</title>
     <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --dark-color: #2d3436;
+            --light-color: #f7f1e3;
+            --text-color: #636e72;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            background-color: var(--dark-color);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .filters {
             display: flex;
             justify-content: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
             align-items: center;
-            height: 100vh;
-            background-color: #222;
-            margin: 0;
-            font-family: Arial, sans-serif;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
         }
 
-        .lamp-container {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
+        .card-body {
+            padding: 1.5rem;
         }
 
-        .bulb {
-            width: 60px;
-            height: 60px;
-            background-color: #333;
-            border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
-            transition: background-color 0.3s ease, transform 0.1s ease;
+        .card-title {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
         }
 
-        .bulb.on {
-            background-color: #fff;
-            box-shadow: 0 0 20px #fff, 0 0 40px #ffeb3b;
-            transform: scale(1.1);
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            background: #f9f9f9;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
-        .switch {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 30px;
-            background-color: #555;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
         }
 
-        .switch::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            width: 28px;
-            height: 28px;
-            background-color: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
+        .card-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
-        .switch.on {
-            background-color: #fff;
+        .card-btn:hover {
+            background-color: #ff5252;
         }
 
-        .switch.on::after {
-            transform: translateX(20px);
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .recipes-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="lamp-container" id="lamp">
-    <div class="bulb" id="bulb"></div>
-    <div class="switch" id="switch"></div>
+<header>
+    <h1>🍗 Куриные Рецепты</h1>
+    <p>Самые вкусные и простые блюда для вашего стола</p>
+</header>
+
+<nav>
+    <a href="#">Главная</a>
+    <a href="#recipes">Рецепты</a>
+    <a href="#">О нас</a>
+</nav>
+
+<div class="container" id="recipes">
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="chicken">Курица</button>
+        <button class="filter-btn" data-filter="salad">Салаты</button>
+        <button class="filter-btn" data-filter="soup">Соусы</button>
+    </div>
+
+    <div class="recipes-grid" id="recipe-container">
+        <!-- Карточка 1 -->
+        <article class="recipe-card" data-category="chicken">
+            <div class="card-image">🍗</div>
+            <div class="card-body">
+                <h2 class="card-title">Курица в духовке с овощами</h2>
+                <div class="card-meta">
+                    <span>Время: 45 мин</span>
+                    <span>Калории: 320 ккал</span>
+                </div>
+                <p class="card-desc">Нежнейшая курица в сливочном соусе с запеченным салатом. Идеально для семейного ужина.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Курица в духовке')">Читать рецепт</a>
+            </div>
+        </article>
+
+        <!-- Карточка 2 -->
+        <article class="recipe-card" data-category="chicken">
+            <div class="card-image">🥗</div>
+            <div class="card-body">
+                <h2 class="card-title">Салат "Курица и Огурцы"</h2>
+                <div class="card-meta">
+                    <span>Время: 15 мин</span>
+                    <span>Калории: 180 ккал</span>
+                </div>
+                <p class="card-desc">Легкий и освежающий салат с хрустящей курицей, свежими овощами и заправкой из оливкового масла.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Салат Курица')">Читать рецепт</a>
+            </div>
+        </article>
+
+        <!-- Карточка 3 -->
+        <article class="recipe-card" data-category="soup">
+            <div class="card-image">🍲</div>
+            <div class="card-body">
+                <h2 class="card-title">Куриный суп "Сливочный"</h2>
+                <div class="card-meta">
+                    <span>Время: 60 мин</span>
+                    <span>Калории: 450 ккал</span>
+                </div>
+                <p class="card-desc">Густой и ароматный суп с кусочками курицы, сливками и зеленью. Теплое блюдо для холодных дней.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Суп Сливочный')">Читать рецепт</a>
+            </div>
+        </article>
+
+        <!-- Карточка 4 -->
+        <article class="recipe-card" data-category="chicken">
+            <div class="card-image">🍛</div>
+            <div class="card-body">
+                <h2 class="card-title">Курица с рисом и брокколи</h2>
+                <div class="card-meta">
+                    <span>Время: 30 мин</span>
+                    <span>Калории: 410 ккал</span>
+                </div>
+                <p class="card-desc">Универсальное блюдо для всей семьи. Рис варится отдельно, а курица тушится с овощами.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Курица с рисом')">Читать рецепт</a>
+            </div>
+        </article>
+
+        <!-- Карточка 5 -->
+        <article class="recipe-card" data-category="salad">
+            <div class="card-image">🥑</div>
+            <div class="card-body">
+                <h2 class="card-title">Салат "Греческий"</h2>
+                <div class="card-meta">
+                    <span>Время: 10 мин</span>
+                    <span>Калории: 250 ккал</span>
+                </div>
+                <p class="card-desc">Классический греческий салат с курицей, феты, оливками и лимонным соком.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Салат Греческий')">Читать рецепт</a>
+            </div>
+        </article>
+
+        <!-- Карточка 6 -->
+        <article class="recipe-card" data-category="soup">
+            <div class="card-image">🍝</div>
+            <div class="card-body">
+                <h2 class="card-title">Куриный суп "Картофельный"</h2>
+                <div class="card-meta">
+                    <span>Время: 40 мин</span>
+                    <span>Калории: 380 ккал</span>
+                </div>
+                <p class="card-desc">Традиционный суп с картошкой, курицей и луком. Готовится на медленном огне.</p>
+                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Суп Картофельный')">Читать рецепт</a>
+            </div>
+        </article>
+    </div>
 </div>
 
-<script>
-    const bulb = document.getElementById('bulb');
-    const switchBtn = document.getElementById('switch');
-    let isOn = false;
+<footer>
+    <p>&copy; 2023 Куриные Рецепты. Все права защищены.</p>
+</footer>
 
-    switchBtn.addEventListener('click', () => {
-        if (isOn) {
-            bulb.classList.remove('on');
-            switchBtn.classList.remove('on');
-            isOn = false;
-        } else {
-            bulb.classList.add('on');
-            switchBtn.classList.add('on');
-            isOn = true;
-        }
+<script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.recipe-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Убираем активный класс у всех кнопок
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Добавляем активный класс нажатой кнопке
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            cards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
     });
 </script>
 
