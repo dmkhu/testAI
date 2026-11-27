@@ -3,315 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Рецепты Курицы - Быстро и вкусно</title>
+    <title>Природа Камчатки | Экологический проект</title>
     <style>
         :root {
-            --primary-color: #ff6b6b;
-            --secondary-color: #4ecdc4;
-            --dark-color: #2d3436;
-            --light-color: #f7f1e3;
-            --text-color: #636e72;
+            --primary-color: #2c5e2e;
+            --secondary-color: #d4a373;
+            --accent-color: #8fbc8f;
+            --text-color: #333;
+            --bg-color: #f9fdf9;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--light-color);
-            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+            background-color: var(--primary-color);
             color: white;
-            padding: 2rem 0;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
         nav {
-            background-color: var(--dark-color);
-            padding: 1rem;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: opacity 0.3s;
         }
 
         nav a:hover {
-            color: var(--secondary-color);
+            opacity: 0.8;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background-color: white;
-            border: 2px solid var(--secondary-color);
-            color: var(--secondary-color);
-            padding: 8px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .recipes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .recipe-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .recipe-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-image {
-            height: 200px;
-            background-color: #ddd;
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1795279180946-ce64b3e6d149?q=80&w=1335&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: white;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-            font-size: 1.4rem;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            background: #f9f9f9;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .card-desc {
-            font-size: 0.95rem;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .card-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: white;
             text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 5px;
             text-decoration: none;
-            border-radius: 8px;
             font-weight: bold;
             transition: background 0.3s;
         }
 
-        .card-btn:hover {
-            background-color: #ff5252;
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .about {
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .gallery {
+            background-color: #e8f5e9;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
         footer {
-            background-color: var(--dark-color);
+            background-color: var(--primary-color);
             color: white;
             text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
+            padding: 2rem 0;
+            margin-top: auto;
         }
 
         @media (max-width: 768px) {
-            header h1 {
+            .hero-content h1 {
                 font-size: 2rem;
             }
-            .recipes-grid {
-                grid-template-columns: 1fr;
+            
+            nav ul {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>🍗 Куриные Рецепты</h1>
-    <p>Самые вкусные и простые блюда для вашего стола</p>
-</header>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Камчатский Эко-Драйв</div>
+                <ul>
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#about">О проекте</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<nav>
-    <a href="#">Главная</a>
-    <a href="#recipes">Рецепты</a>
-    <a href="#">О нас</a>
-</nav>
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Добро пожаловать на Камчатку</h1>
+            <p>Защитите уникальную природу, где горы, океан и тайга встречаются в гармонии.</p>
+            <a href="#about" class="btn">Узнать больше</a>
+        </div>
+    </section>
 
-<div class="container" id="recipes">
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">Все</button>
-        <button class="filter-btn" data-filter="chicken">Курица</button>
-        <button class="filter-btn" data-filter="salad">Салаты</button>
-        <button class="filter-btn" data-filter="soup">Соусы</button>
-    </div>
-
-    <div class="recipes-grid" id="recipe-container">
-        <!-- Карточка 1 -->
-        <article class="recipe-card" data-category="chicken">
-            <div class="card-image">🍗</div>
-            <div class="card-body">
-                <h2 class="card-title">Курица в духовке с овощами</h2>
-                <div class="card-meta">
-                    <span>Время: 45 мин</span>
-                    <span>Калории: 320 ккал</span>
+    <section id="about" class="section about">
+        <div class="container">
+            <h2>Почему Камчатка?</h2>
+            <p>Это не просто горная страна. Это место, где природа демонстрирует невероятную устойчивость и красоту. Здесь находится самая высокая точка мира — вулкан Ключевская Сопка.</p>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🏔️</div>
+                    <h3>Горы</h3>
+                    <p>Уникальные ландшафты, вулканы и ледники, которые формируют саму Землю.</p>
                 </div>
-                <p class="card-desc">Нежнейшая курица в сливочном соусе с запеченным салатом. Идеально для семейного ужина.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Курица в духовке')">Читать рецепт</a>
-            </div>
-        </article>
-
-        <!-- Карточка 2 -->
-        <article class="recipe-card" data-category="chicken">
-            <div class="card-image">🥗</div>
-            <div class="card-body">
-                <h2 class="card-title">Салат "Курица и Огурцы"</h2>
-                <div class="card-meta">
-                    <span>Время: 15 мин</span>
-                    <span>Калории: 180 ккал</span>
+                <div class="feature-card">
+                    <div class="feature-icon">🌊</div>
+                    <h3>Океан</h3>
+                    <p>Тихий океан с богатейшими морскими ресурсами и редкими видами рыб.</p>
                 </div>
-                <p class="card-desc">Легкий и освежающий салат с хрустящей курицей, свежими овощами и заправкой из оливкового масла.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Салат Курица')">Читать рецепт</a>
-            </div>
-        </article>
-
-        <!-- Карточка 3 -->
-        <article class="recipe-card" data-category="soup">
-            <div class="card-image">🍲</div>
-            <div class="card-body">
-                <h2 class="card-title">Куриный суп "Сливочный"</h2>
-                <div class="card-meta">
-                    <span>Время: 60 мин</span>
-                    <span>Калории: 450 ккал</span>
+                <div class="feature-card">
+                    <div class="feature-icon">🌲</div>
+                    <h3>Тайга</h3>
+                    <p>Самая густая лесная зона в мире, где растут редкие виды деревьев.</p>
                 </div>
-                <p class="card-desc">Густой и ароматный суп с кусочками курицы, сливками и зеленью. Теплое блюдо для холодных дней.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Суп Сливочный')">Читать рецепт</a>
             </div>
-        </article>
+        </div>
+    </section>
 
-        <!-- Карточка 4 -->
-        <article class="recipe-card" data-category="chicken">
-            <div class="card-image">🍛</div>
-            <div class="card-body">
-                <h2 class="card-title">Курица с рисом и брокколи</h2>
-                <div class="card-meta">
-                    <span>Время: 30 мин</span>
-                    <span>Калории: 410 ккал</span>
+    <section id="gallery" class="section gallery">
+        <div class="container">
+            <h2>Галерея природы</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1596403782267-e2c7a91b7e23?q=80&w=1335&auto=format&fit=crop" alt="Горы Камчатки">
                 </div>
-                <p class="card-desc">Универсальное блюдо для всей семьи. Рис варится отдельно, а курица тушится с овощами.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Курица с рисом')">Читать рецепт</a>
-            </div>
-        </article>
-
-        <!-- Карточка 5 -->
-        <article class="recipe-card" data-category="salad">
-            <div class="card-image">🥑</div>
-            <div class="card-body">
-                <h2 class="card-title">Салат "Греческий"</h2>
-                <div class="card-meta">
-                    <span>Время: 10 мин</span>
-                    <span>Калории: 250 ккал</span>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1335&auto=format&fit=crop" alt="Лес Камчатки">
                 </div>
-                <p class="card-desc">Классический греческий салат с курицей, феты, оливками и лимонным соком.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Салат Греческий')">Читать рецепт</a>
-            </div>
-        </article>
-
-        <!-- Карточка 6 -->
-        <article class="recipe-card" data-category="soup">
-            <div class="card-image">🍝</div>
-            <div class="card-body">
-                <h2 class="card-title">Куриный суп "Картофельный"</h2>
-                <div class="card-meta">
-                    <span>Время: 40 мин</span>
-                    <span>Калории: 380 ккал</span>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1474487539236-34202123bfa5?q=80&w=1335&auto=format&fit=crop" alt="Океан Камчатки">
                 </div>
-                <p class="card-desc">Традиционный суп с картошкой, курицей и луком. Готовится на медленном огне.</p>
-                <a href="#" class="card-btn" onclick="alert('Переход к рецепту: Суп Картофельный')">Читать рецепт</a>
             </div>
-        </article>
-    </div>
-</div>
+        </div>
+    </section>
 
-<footer>
-    <p>&copy; 2023 Куриные Рецепты. Все права защищены.</p>
-</footer>
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2023 Проект поддержки природы Камчатки. Все права защищены.</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Создано с любовью к природе</p>
+        </div>
+    </footer>
 
-<script>
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.recipe-card');
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Убираем активный класс у всех кнопок
-            filterBtns.forEach(b => b.classList.remove('active'));
-            // Добавляем активный класс нажатой кнопке
-            btn.classList.add('active');
-
-            const filterValue = btn.getAttribute('data-filter');
-
-            cards.forEach(card => {
-                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+    <script>
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
-    });
-</script>
 
+        // Простой эффект при наведении на карточки
+        const cards = document.querySelectorAll('.feature-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>
