@@ -3,372 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мир Котиков 🐾</title>
-    <!-- Подключаем милые шрифты от Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    
+    <title>BLOG | Беговой клуб "Жало в Жопу"</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* --- Основные настройки стиля (CSS) --- */
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --bg-color: #fdfbf7; /* Теплый белый/кремовый фон */
-            --primary-color: #ff9a9e; /* Мягкий розовый */
-            --secondary-color: #a18cd1; /* Светло-фиолетовый */
-            --text-color: #4a4a4a; /* Темно-серый для читаемости */
-            --accent-color: #ff6b6b; /* Акцентный цвет (красный) */
+            --primary-color: #ff6b00; /* Оранжевый акцент */
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-gray: #a0a0a0;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             line-height: 1.6;
-            overflow-x: hidden; /* Чтобы не было горизонтального скролла */
         }
 
         h1, h2, h3 {
-            font-family: 'Quicksand', sans-serif;
-            color: #4a4a4a;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
         }
 
-        /* --- Шапка сайта (Header) --- */
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 30px;
+            font-weight: 700;
+            border-radius: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #e65100;
+            transform: translateY(-2px);
+        }
+
+        /* --- HEADER --- */
         header {
-            background-color: white;
-            padding: 20px 50px;
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .nav-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--secondary-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
         }
 
         .logo span {
-            background: linear-gradient(45deg, #ff9a9e, #a18cd1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary-color);
         }
 
         nav ul {
             display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 600;
-            transition: color 0.3s;
+            gap: 30px;
         }
 
         nav a:hover {
             color: var(--primary-color);
         }
 
-        /* --- Главный экран (Hero) --- */
+        /* --- HERO SECTION --- */
         .hero {
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Фоновое изображение с затемнением */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'); /* Котик на фоне */
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            filter: brightness(0.6); /* Затемняем фото для читаемости текста */
-            z-index: -1;
+            display: flex;
+            align-items: center;
+            text-align: center;
         }
 
         .hero-content {
-            max-width: 50%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
+            line-height: 1.1;
             margin-bottom: 20px;
-            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
+            color: var(--text-gray);
             margin-bottom: 30px;
-            color: #666;
         }
 
-        .btn {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
-            background-color: #ff758c;
-        }
-
-        /* --- Секция с котиками (Grid) --- */
+        /* --- FEATURES / ABOUT --- */
         .section {
-            padding: 80px 10%;
+            padding: 80px 0;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 50px;
             font-size: 2.5rem;
-            color: var(--secondary-color);
+            margin-bottom: 60px;
+        }
+        
+        .section-title span {
+            border-bottom: 3px solid var(--primary-color);
         }
 
-        .cats-grid {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
-        .cat-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+        .feature-card {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 10px;
             text-align: center;
+            transition: 0.3s;
         }
 
-        .cat-card:hover {
+        .feature-card:hover {
             transform: translateY(-10px);
         }
 
-        .cat-img-container {
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .cat-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .cat-card:hover .cat-img-container img {
-            transform: scale(1.1); /* Эффект зума */
-        }
-
-        .cat-info {
-            padding: 20px;
-        }
-
-        .cat-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .cat-breed {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        /* --- Секция "Почему мы любим котиков" --- */
-        .features {
-            background-color: white;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-        }
-
-        .feature-box {
-            text-align: center;
-            max-width: 300px;
-        }
-
-        .icon {
+        .feature-icon {
             font-size: 3rem;
             margin-bottom: 20px;
             display: block;
         }
 
-        /* --- Футер --- */
+        /* --- SCHEDULES (TIMELINE) --- */
+        .schedule-wrapper {
+            background-color: var(--bg-card);
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-dark);
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+        .right::after { left: -10px; }
+
+        .content {
+            padding: 20px 30px;
+            background-color: inherit;
+            position: relative;
+        }
+
+        .content h3 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        /* --- FOOTER --- */
         footer {
-            background-color: var(--secondary-color);
-            color: white;
+            background-color: #0a0a0a;
+            padding: 40px 0;
             text-align: center;
-            padding: 40px;
+            border-top: 1px solid #333;
         }
 
-        footer p {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: var(--text-gray);
         }
 
-        /* Адаптивность для мобильных */
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column-reverse;
-                text-align: center;
-                height: auto;
-                padding-top: 50px;
-                gap: 50px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            nav ul {
-                gap: 15px;
-                font-size: 0.9rem;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 21px; }
+            .left, .right { left: 0; }
+            nav ul { display: none; } /* Simplified for demo */
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+    <!-- Header -->
     <header>
-        <a href="#" class="logo">🐾 Котик<span>Мир</span></a>
-        <nav>
-            <ul>
-                <li><a href="#home">Главная</a></li>
-                <li><a href="#gallery">Галерея</a></li>
-                <li><a href="#about">О нас</a></li>
-            </ul>
-        </nav>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">BLOG<span>.</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#about">О клубе</a></li>
+                    <li><a href="#schedules">Расписание</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Главный экран -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <h1>Почему мы любим котиков?</h1>
-            <p>У них есть пушистая шерстка, умные глаза и способность приносить счастье в дом. Выглядите милым!</p>
-            <a href="#gallery" class="btn">Смотреть котов</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>ПРИЕДЕРЖИ СВОЙ<br><span style="color:var(--primary-color)">ГОЛОВОК</span></h1>
+            <p>Лучший бег в городе. Энтузиазм, драйв и здоровая конкуренция.</p>
+            <a href="#schedules" class="btn">ПОДПИСАТЬСЯ НА БУМЕР</a>
         </div>
     </section>
 
-    <!-- Секция с карточками -->
-    <section class="section" id="gallery">
-        <h2 class="section-title">Наши любимые коты 🐾</h2>
-        
-        <div class="cats-grid">
-            <!-- Кот 1 -->
-            <div class="cat-card">
-                <div class="cat-img-container">
-                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Милый кот">
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title"><span>О КЛУБЕ</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Энергия</h3>
+                    <p>Мы не просто бегуны. Мы — команда, которая держит в гору даже самые сложные дистанции.</p>
                 </div>
-                <div class="cat-info">
-                    <h3>Луня</h3>
-                    <p class="cat-breed">Терьер</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Кто бы мог подумать, что этот серый котик может прыгать так высоко!</p>
+                <div class="feature-card">
+                    <span class="feature-icon">🏃‍♂️</span>
+                    <h3>Коллектив</h3>
+                    <p>Здесь нет одиночества. Мы сходим, если не уйдем сами.</p>
                 </div>
-            </div>
-
-            <!-- Кот 2 -->
-            <div class="cat-card">
-                <div class="cat-img-container">
-                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Милый кот">
-                </div>
-                <div class="cat-info">
-                    <h3>Барсик</h3>
-                    <p class="cat-breed">Британская кобель</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Он всегда спит, но когда просыпается — это праздник!</p>
-                </div>
-            </div>
-
-            <!-- Кот 3 -->
-            <div class="cat-card">
-                <div class="cat-img-container">
-                    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Милый кот">
-                </div>
-                <div class="cat-info">
-                    <h3>Горбатик</h3>
-                    <p class="cat-breed">Британская кошка</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Легендарный кот, который любит играть с мячом.</p>
-                </div>
-            </div>
-
-             <!-- Кот 4 -->
-             <div class="cat-card">
-                <div class="cat-img-container">
-                    <img src="https://images.unsplash.com/photo-1569387128091-a2db25a2f5c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Милый кот">
-                </div>
-                <div class="cat-info">
-                    <h3>Пупушка</h3>
-                    <p class="cat-breed">Британская кошка</p>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">Она просто невероятно милая и уютная.</p>
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3>Развитие</h3>
+                    <p>От новичков до профессионалов. Мы учимся, как бегать лучше.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Секция "Почему мы любим котиков" -->
-    <section class="section features" id="about">
-        <div class="feature-box">
-            <span class="icon">🐟</span>
-            <h2>Их вкусняшки</h2>
-            <p>Коты обожают мясо и рыбу. Мы любим их за то, что они могут найти нам еду в темноте.</p>
-        </div>
-        <div class="feature-box">
-            <span class="icon">🕷️</span>
-            <h2>Их коготки</h2>
-            <p>Никто не знает, почему они так сильно любят ловить пауков. Это их любимая игра!</p>
-        </div>
-        <div class="feature-box">
-            <span class="icon">🧶</span>
-            <h2>Их игрушки</h2>
-            <p>Коты обожают играть со шнурками, мячиками и ланч-боксами.</p>
+    <!-- Schedule Section -->
+    <section id="schedules" class="schedule-wrapper">
+        <div class="container">
+            <h2 class="section-title"><span>РАСПИСАНИЕ</span></h2>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="content">
+                        <h3>Завтра, 10:00</h3>
+                        <p>Медленное бегание для разминки и знакомства с обстановкой.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="content">
+                        <h3>Сегодня, 14:00</h3>
+                        <p>Финальное пробежочное. Ожидаем самых быстрых!</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="content">
+                        <h3>Завтра, 16:00</h3>
+                        <p>Супер-бег с "шпагом" (погоня за рекордом).</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Футер -->
+    <!-- Contacts Section -->
+    <section id="contacts" class="section">
+        <div class="container">
+            <h2 class="section-title"><span>НАШЕ ПОДКЛЮЧЕНИЕ</span></h2>
+            <div style="text-align: center;">
+                <p style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Не жди, пока кто-то приедет. Жалобка на плохое настроение — это не привет. Приходи к нам и разгоняйся!
+                </p>
+                <a href="mailto:info@blog.ru" class="btn">НАЖМИТЬ НА СЮДА</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>Сделано с любовью к котикам ❤️</p>
-        <p>&copy; 2023 КотикМир</p>
+        <div class="container">
+            <p>&copy; 2023 Беговой клуб «Жало в Жопу». Все права защищены.</p>
+            <div class="social-links">
+                <a href="#">VK</a>
+                <a href="#">Telegram</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Небольшой скрипт для плавного скролла
+        // Плавная прокрутка к якорям
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -378,24 +366,16 @@
             });
         });
 
-        // Анимация появления элементов при скролле
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        // Простой эффект при наведении на кнопки
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(5px)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0)';
             });
         });
-
-        // Применяем анимацию к карточкам
-        document.querySelectorAll('.cat-card').forEach((el) => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(50px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
     </script>
-
 </body>
 </html>
